@@ -1,4 +1,6 @@
 import { body } from "express-validator";
+import rejectDangerousCharacters from "./utils/rejectDangerousCharacters";
+import rejectEmailInjection from "./utils/rejectEmailInjection";
 
 export const registerRequestValidator = [
   body("name")
@@ -6,7 +8,8 @@ export const registerRequestValidator = [
     .notEmpty()
     .withMessage("Name is required")
     .isAlphanumeric()
-    .withMessage("Name must be alphanumeric"),
+    .withMessage("Name must be alphanumeric")
+    .custom(rejectDangerousCharacters),
 
   body("toBeConfirmedEmail")
     .trim()
@@ -14,7 +17,8 @@ export const registerRequestValidator = [
     .notEmpty()
     .withMessage("Email is required")
     .isEmail()
-    .withMessage("Email must be a valid email address"),
+    .withMessage("Email must be a valid email address")
+    .custom(rejectEmailInjection),
 
   body("password")
     .trim()
@@ -27,5 +31,6 @@ export const registerRequestValidator = [
     .matches(/[A-Z]/)
     .withMessage("Password must contain an uppercase letter")
     .matches(/[^A-Za-z0-9]/)
-    .withMessage("Password must contain a special character"),
+    .withMessage("Password must contain a special character")
+    .custom(rejectDangerousCharacters),
 ];
