@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { registerUserRequestHandler } from "./handlers/registerUserHandler";
-import { registerRequestValidator } from "./authValidators";
-import { registerRateLimiter } from "./authLimiter";
+import { loginValidator, registerRequestValidator } from "./authValidators";
+import { loginRateLimiter, registerRateLimiter } from "./authLimiter";
 import rejectNestedObjects from "../../middlewares/rejectNestedObjects";
+import { loginUserEmailHandler } from "./handlers/loginUserEmailHandler";
 
 const authRoutes = Router();
 
@@ -12,6 +13,14 @@ authRoutes.post(
   registerRequestValidator,
   rejectNestedObjects,
   registerUserRequestHandler
+);
+
+authRoutes.post(
+  "/login",
+  loginRateLimiter,
+  loginValidator,
+  rejectNestedObjects,
+  loginUserEmailHandler
 );
 
 export default authRoutes;
