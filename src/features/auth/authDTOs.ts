@@ -3,3 +3,8 @@ export type RegisterRequestDTO = {
   toBeConfirmedEmail: string;
   password: string;
 };
+
+export type LoginDTO = {
+  email: string;
+  password: string;
+};
