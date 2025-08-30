@@ -34,3 +34,14 @@ export const registerRequestValidator = [
     .withMessage("Password must contain a special character")
     .custom(rejectDangerousCharacters),
 ];
+
+export const loginValidator = [
+  body("email")
+    .trim()
+    .toLowerCase()
+    .notEmpty()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Email must be a valid email address"),
+  body("password").notEmpty().withMessage("Password is required"),
+];
