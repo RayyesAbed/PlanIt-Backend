@@ -13,7 +13,7 @@ export const registerUserRequestHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const { JWT_SECRET, VITE_FRONTEND_URL } = getEnvVariables();
+  const { JWT_SECRET, FRONTEND_URL } = getEnvVariables();
 
   try {
     // Get the validation result from the validator middleware assigned to the /register_request endpoint
@@ -51,7 +51,7 @@ export const registerUserRequestHandler = async (
         jwtid: randomUUID(),
       });
 
-      const verificationURL = `${VITE_FRONTEND_URL}?email-token-verify=${verificationToken}`;
+      const verificationURL = `${FRONTEND_URL}?email-token-verify=${verificationToken}`;
 
       await sendEmail(
         registerCredentialsDTO.toBeConfirmedEmail,
