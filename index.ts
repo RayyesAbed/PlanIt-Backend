@@ -7,6 +7,7 @@ import express from "express";
 import cors from "cors";
 import mongooseConnect from "./src/configs/mongooseConnect";
 import authRoutes from "./src/features/auth/authRoutes";
+import deleteUnverifiedEmails from "./src/jobs/deleteUnverifiedEmails";
 
 const app = express();
 
@@ -20,6 +21,8 @@ const launchBackendServer = async () => {
   );
 
   await mongooseConnect();
+  await deleteUnverifiedEmails.start();
+
   app.use("/auth", authRoutes);
   app.listen(3000);
 };
