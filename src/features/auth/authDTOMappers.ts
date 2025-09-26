@@ -4,6 +4,7 @@ export const toRegisterDTO = (credentials: any): RegisterRequestDTO => {
   return {
     name: credentials.name,
     toBeConfirmedEmail: credentials.toBeConfirmedEmail,
+    birthDate: credentials.birthDate,
     password: credentials.password,
   };
 };
