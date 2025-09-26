@@ -4,6 +4,7 @@ import { loginValidator, registerRequestValidator } from "./authValidators";
 import { loginRateLimiter, registerRateLimiter } from "./authLimiter";
 import rejectNestedObjects from "../../middlewares/rejectNestedObjects";
 import { loginUserEmailHandler } from "./handlers/loginUserEmailHandler";
+import { verifyUserEmailHandler } from "./handlers/verifyUserEmailHandler";
 
 const authRoutes = Router();
 
@@ -14,6 +15,8 @@ authRoutes.post(
   rejectNestedObjects,
   registerUserRequestHandler
 );
+
+authRoutes.post("/verify-email", verifyUserEmailHandler);
 
 authRoutes.post(
   "/login",
