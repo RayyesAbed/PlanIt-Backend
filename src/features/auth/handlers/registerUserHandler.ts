@@ -43,6 +43,7 @@ export const registerUserRequestHandler = async (
       const newUser = await User.create({
         name: registerCredentialsDTO.name,
         toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail,
+        birthDate: registerCredentialsDTO.birthDate,
         password: hashedPassword,
       });
 
@@ -51,7 +52,7 @@ export const registerUserRequestHandler = async (
         jwtid: randomUUID(),
       });
 
-      const verificationURL = `${FRONTEND_URL}?email-token-verify=${verificationToken}`;
+      const verificationURL = `${FRONTEND_URL}/verify?token=${verificationToken}`;
 
       await sendEmail(
         registerCredentialsDTO.toBeConfirmedEmail,
