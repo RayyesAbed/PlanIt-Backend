@@ -4,10 +4,12 @@ import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import User from "../../../schemas/User";
+import Subscription from "../../../schemas/Subscription";
 import { toRegisterDTO } from "../authDTOMappers";
 import sendEmail from "../../../configs/nodemailer";
 import registerVerifyTemplate from "../emailTemplates/registerVerifyTemplate";
 import { getEnvVariables } from "../../../configs/enviromentVariables";
+import { getCurrencyFromIP } from "../../../utils/currency";
 
 export const registerUserRequestHandler = async (
   req: Request,
@@ -26,6 +28,12 @@ export const registerUserRequestHandler = async (
 
     // If there are no validation errors, then proceed
 
+    const deviceIPv6 = req.ip; // Express req returns IPv6 representation
+
+    if (!deviceIPv6) throw new Error("Device IP not found");
+
+    const deviceIPv4 = deviceIPv6.substring(7);
+
     const registerCredentialsDTO = toRegisterDTO(req.body);
 
     // Find user either by 'confirmedEmail' or 'toBeConfirmedEmail' attributes in MongoDB
@@ -40,10 +48,18 @@ export const registerUserRequestHandler = async (
     if (!existingUser) {
       const hashedPassword = await argon2.hash(registerCredentialsDTO.password);
 
+      const freePlan = await Subscription.findOne({ name: "Free" });
+
+      if (!freePlan) throw new Error("Free subscription plan not found");
+
+      const currencySymbol = getCurrencyFromIP(deviceIPv4);
+
       const newUser = await User.create({
         name: registerCredentialsDTO.name,
         toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail,
         birthDate: registerCredentialsDTO.birthDate,
+        subscription: freePlan._id,
+        currency: currencySymbol,
         password: hashedPassword,
       });
 
