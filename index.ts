@@ -8,6 +8,8 @@ import cors from "cors";
 import mongooseConnect from "./src/configs/mongooseConnect";
 import authRoutes from "./src/features/auth/authRoutes";
 import deleteUnverifiedEmails from "./src/jobs/deleteUnverifiedEmails";
+import { initGeoLite } from "./src/configs/geolite";
+import seedSubscriptions from "./src/seed/seedSubscriptions";
 
 const app = express();
 
@@ -20,7 +22,12 @@ const launchBackendServer = async () => {
     })
   );
 
+  await initGeoLite();
+
   await mongooseConnect();
+
+  await seedSubscriptions();
+
   await deleteUnverifiedEmails.start();
 
   app.use("/auth", authRoutes);

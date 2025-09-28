@@ -17,11 +17,20 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     birthDate: {
-      type: Date,
+      type: String,
     },
     points: {
       type: Number,
       default: 0,
+    },
+    currency: {
+      type: String,
+      required: true,
+    },
+    subscription: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subscription",
+      required: true,
     },
   },
   {
