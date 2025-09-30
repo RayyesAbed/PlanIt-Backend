@@ -8,14 +8,15 @@ import Subscription from "../../../schemas/Subscription";
 import { toRegisterDTO } from "../authDTOMappers";
 import sendEmail from "../../../configs/nodemailer";
 import registerVerifyTemplate from "../emailTemplates/registerVerifyTemplate";
-import { getEnvVariables } from "../../../configs/enviromentVariables";
 import { getCurrencyFromIP } from "../../../utils/currency";
+import loadAwsSecrets from "../../../configs/loadAwsSecrets";
 
 export const registerUserRequestHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const { JWT_SECRET, FRONTEND_URL } = getEnvVariables();
+  const FRONTEND_URL = process.env.FRONTEND_URL;
+  const { JWT_SECRET } = await loadAwsSecrets();
 
   try {
     // Get the validation result from the validator middleware assigned to the /register_request endpoint
