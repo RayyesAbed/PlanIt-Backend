@@ -37,6 +37,14 @@ export const registerUserRequestHandler = async (
 
     const registerCredentialsDTO = toRegisterDTO(req.body);
 
+    if (
+      registerCredentialsDTO.preferredLanguage != "de" &&
+      registerCredentialsDTO.preferredLanguage != "en" &&
+      registerCredentialsDTO.preferredLanguage != "ar"
+    ) {
+      throw new Error("Preferred language currently not supported");
+    }
+
     // Find user either by 'confirmedEmail' or 'toBeConfirmedEmail' attributes in MongoDB
 
     const existingUser = await User.findOne({
@@ -59,15 +67,24 @@ export const registerUserRequestHandler = async (
         name: registerCredentialsDTO.name,
         toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail,
         birthDate: registerCredentialsDTO.birthDate,
+        preferredLanguage: registerCredentialsDTO.preferredLanguage,
         subscription: freePlan._id,
         currency: currencySymbol,
         password: hashedPassword,
       });
 
-      const verificationToken = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
-        expiresIn: "1h",
-        jwtid: randomUUID(),
-      });
+      const verificationToken = jwt.sign(
+        {
+          userId: newUser._id,
+          lang: registerCredentialsDTO.preferredLanguage,
+          purpose: "verify_email",
+        },
+        JWT_SECRET,
+        {
+          expiresIn: "1h",
+          jwtid: randomUUID(),
+        }
+      );
 
       const verificationURL = `${FRONTEND_URL}/verify?token=${verificationToken}`;
 
