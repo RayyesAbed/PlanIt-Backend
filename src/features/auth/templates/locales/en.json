@@ -1,0 +1,12 @@
+{
+  "verification": {
+    "subject": "Verify your email",
+    "greeting": "Hey",
+    "bodyText": "Are you ready to start with your hero's journey? Then verify your email by clicking on the email verification link.",
+    "buttonText": "Verify my Email",
+    "footer": "We can't wait to see your future self",
+    "end": "Happy journey"
+  },
+  "dir": "ltr",
+  "textAlign": "left"
+}
