@@ -6,10 +6,9 @@ import { validationResult } from "express-validator";
 import User from "../../../schemas/User";
 import Subscription from "../../../schemas/Subscription";
 import { toRegisterDTO } from "../authDTOMappers";
-import sendEmail from "../../../configs/nodemailer";
-import registerVerifyTemplate from "../emailTemplates/registerVerifyTemplate";
 import { getCurrencyFromIP } from "../../../utils/currency";
 import loadAwsSecrets from "../../../configs/loadAwsSecrets";
+import sendVerificationEmail from "../utils/sendVerificationEmail";
 
 export const registerUserRequestHandler = async (
   req: Request,
@@ -86,12 +85,11 @@ export const registerUserRequestHandler = async (
         }
       );
 
-      const verificationURL = `${FRONTEND_URL}/verify?token=${verificationToken}`;
-
-      await sendEmail(
-        registerCredentialsDTO.toBeConfirmedEmail,
-        "PlanIt Account Creation",
-        registerVerifyTemplate(registerCredentialsDTO.name, verificationURL)
+      await sendVerificationEmail(
+        newUser.name,
+        newUser.toBeConfirmedEmail!,
+        newUser.preferredLanguage,
+        verificationToken
       );
     }
 
