@@ -1,0 +1,12 @@
+{
+  "verification": {
+    "subject": "Bestätige deine E-Mail",
+    "greeting": "Hallo",
+    "bodyText": "Bist du bereit, deine Heldenreise zu beginnen? Dann bestätige deine E-Mail, indem du auf den Bestätigungslink klickst.",
+    "buttonText": "Meine E-Mail bestätigen",
+    "footer": "Wir können es kaum erwarten, dein zukünftiges Ich zu sehen",
+    "end": "Eine schöne Reise!"
+  },
+  "dir": "ltr",
+  "textAlign": "left"
+}
