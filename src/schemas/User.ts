@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema(
     birthDate: {
       type: String,
     },
+    preferredLanguage: {
+      type: String,
+      required: true,
+    },
     points: {
       type: Number,
       default: 0,

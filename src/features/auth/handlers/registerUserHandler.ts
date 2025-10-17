@@ -6,10 +6,9 @@ import { validationResult } from "express-validator";
 import User from "../../../schemas/User";
 import Subscription from "../../../schemas/Subscription";
 import { toRegisterDTO } from "../authDTOMappers";
-import sendEmail from "../../../configs/nodemailer";
-import registerVerifyTemplate from "../emailTemplates/registerVerifyTemplate";
 import { getCurrencyFromIP } from "../../../utils/currency";
 import loadAwsSecrets from "../../../configs/loadAwsSecrets";
+import sendVerificationEmail from "../utils/sendVerificationEmail";
 
 export const registerUserRequestHandler = async (
   req: Request,
@@ -37,6 +36,14 @@ export const registerUserRequestHandler = async (
 
     const registerCredentialsDTO = toRegisterDTO(req.body);
 
+    if (
+      registerCredentialsDTO.preferredLanguage != "de" &&
+      registerCredentialsDTO.preferredLanguage != "en" &&
+      registerCredentialsDTO.preferredLanguage != "ar"
+    ) {
+      throw new Error("Preferred language currently not supported");
+    }
+
     // Find user either by 'confirmedEmail' or 'toBeConfirmedEmail' attributes in MongoDB
 
     const existingUser = await User.findOne({
@@ -59,22 +66,30 @@ export const registerUserRequestHandler = async (
         name: registerCredentialsDTO.name,
         toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail,
         birthDate: registerCredentialsDTO.birthDate,
+        preferredLanguage: registerCredentialsDTO.preferredLanguage,
         subscription: freePlan._id,
         currency: currencySymbol,
         password: hashedPassword,
       });
 
-      const verificationToken = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
-        expiresIn: "1h",
-        jwtid: randomUUID(),
-      });
+      const verificationToken = jwt.sign(
+        {
+          userId: newUser._id,
+          lang: registerCredentialsDTO.preferredLanguage,
+          purpose: "verify_email",
+        },
+        JWT_SECRET,
+        {
+          expiresIn: "1h",
+          jwtid: randomUUID(),
+        }
+      );
 
-      const verificationURL = `${FRONTEND_URL}/verify?token=${verificationToken}`;
-
-      await sendEmail(
-        registerCredentialsDTO.toBeConfirmedEmail,
-        "PlanIt Account Creation",
-        registerVerifyTemplate(registerCredentialsDTO.name, verificationURL)
+      await sendVerificationEmail(
+        newUser.name,
+        newUser.toBeConfirmedEmail!,
+        newUser.preferredLanguage,
+        verificationToken
       );
     }
 
