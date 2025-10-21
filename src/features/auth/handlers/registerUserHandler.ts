@@ -1,22 +1,16 @@
-import { randomUUID } from "crypto";
 import { Request, Response } from "express";
-import * as argon2 from "argon2";
-import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import User from "../../../schemas/User";
-import Subscription from "../../../schemas/Subscription";
 import { toRegisterDTO } from "../authDTOMappers";
-import { getCurrencyFromIP } from "../../../utils/currency";
-import loadAwsSecrets from "../../../configs/loadAwsSecrets";
 import sendVerificationEmail from "../utils/sendVerificationEmail";
+import createNewUser from "../services/register/createNewUser";
+import signJWT from "../services/common/signJWT";
+import supportedLanguages from "../../../resources/languages/supportedLanguages";
 
 export const registerUserRequestHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const FRONTEND_URL = process.env.FRONTEND_URL;
-  const { JWT_SECRET } = await loadAwsSecrets();
-
   try {
     // Get the validation result from the validator middleware assigned to the /register_request endpoint
 
@@ -37,9 +31,7 @@ export const registerUserRequestHandler = async (
     const registerCredentialsDTO = toRegisterDTO(req.body);
 
     if (
-      registerCredentialsDTO.preferredLanguage != "de" &&
-      registerCredentialsDTO.preferredLanguage != "en" &&
-      registerCredentialsDTO.preferredLanguage != "ar"
+      !supportedLanguages.includes(registerCredentialsDTO.preferredLanguage)
     ) {
       throw new Error("Preferred language currently not supported");
     }
@@ -54,35 +46,12 @@ export const registerUserRequestHandler = async (
     });
 
     if (!existingUser) {
-      const hashedPassword = await argon2.hash(registerCredentialsDTO.password);
+      const newUser = await createNewUser(registerCredentialsDTO, deviceIPv4);
 
-      const freePlan = await Subscription.findOne({ name: "Free" });
-
-      if (!freePlan) throw new Error("Free subscription plan not found");
-
-      const currencySymbol = getCurrencyFromIP(deviceIPv4);
-
-      const newUser = await User.create({
-        name: registerCredentialsDTO.name,
-        toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail,
-        birthDate: registerCredentialsDTO.birthDate,
-        preferredLanguage: registerCredentialsDTO.preferredLanguage,
-        subscription: freePlan._id,
-        currency: currencySymbol,
-        password: hashedPassword,
-      });
-
-      const verificationToken = jwt.sign(
-        {
-          userId: newUser._id,
-          lang: registerCredentialsDTO.preferredLanguage,
-          purpose: "verify_email",
-        },
-        JWT_SECRET,
-        {
-          expiresIn: "1h",
-          jwtid: randomUUID(),
-        }
+      const verificationToken = await signJWT(
+        registerCredentialsDTO,
+        "register_user",
+        newUser._id
       );
 
       await sendVerificationEmail(
