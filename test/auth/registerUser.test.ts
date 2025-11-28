@@ -21,6 +21,11 @@ describe("Test user registration cases", () => {
     });
 
     it("should create a new user", async () => {
-       
+        vi.mocked(User.findOne).mockResolvedValue(null);
+        vi.mocked(createNewUser).mockResolvedValue({_id: "12345", toBeConfirmedEmail: "abdallah@example.com"} as any);
+        vi.mocked(signJWT).mockResolvedValue("fake-jwt-token");
+        vi.mocked(sendVerificationEmail).mockResolvedValue();
+
+        
     });
 })
