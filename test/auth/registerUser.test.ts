@@ -15,3 +15,12 @@ vi.mock("../../src/features/auth/authDTOMappers", () => ({
   toRegisterDTO: (body: RegisterRequestDTO) => body
 }));
 
+describe("Test user registration cases", () => {
+    beforeEach(() => {
+        vi.resetAllMocks();
+    });
+
+    it("should create a new user", async () => {
+       
+    });
+})
