@@ -26,6 +26,10 @@ describe("Test user registration cases", () => {
         vi.mocked(signJWT).mockResolvedValue("fake-jwt-token");
         vi.mocked(sendVerificationEmail).mockResolvedValue();
 
-        
+        const request = mockRequest({name: "Abdallah", toBeConfirmedEmail: "abdallah@example.com", preferredLanguage: "en", password: "123Abc456Def"});
+        const response = mockResponse();
+
+        await registerUserRequestHandler(request as any, response);
+
     });
 })
