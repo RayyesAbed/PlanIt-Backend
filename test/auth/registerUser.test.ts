@@ -31,5 +31,10 @@ describe("Test user registration cases", () => {
 
         await registerUserRequestHandler(request as any, response);
 
+        expect(User.findOne).toHaveBeenCalled();
+        expect(createNewUser).toHaveBeenCalled();
+        expect(signJWT).toHaveBeenCalled();
+        expect(sendVerificationEmail).toHaveBeenCalled();
+        expect(response.status).toHaveBeenCalledWith(200);
     });
 })
