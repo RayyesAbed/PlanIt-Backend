@@ -1,5 +1,17 @@
-import { beforeEach, vi, describe, it, afterEach } from "vitest";
+import { beforeEach, vi, describe, it, expect } from "vitest";
 import { registerUserRequestHandler } from "../../src/features/auth/handlers/registerUserHandler";
+import createNewUser from "../../src/features/auth/services/register/createNewUser";
+import signJWT from "../../src/features/auth/services/common/signJWT";
+import sendVerificationEmail from "../../src/features/auth/utils/sendVerificationEmail";
 import User from "../../src/schemas/User";
+import { mockRequest, mockResponse } from "../utils/mockExpress";
+import { RegisterRequestDTO } from "../../src/features/auth/authDTOs";
 
 vi.mock("../../src/schemas/User");
+vi.mock("../../src/features/auth/services/register/createNewUser");
+vi.mock("../../src/features/auth/services/common/signJWT");
+vi.mock("../../src/features/auth/utils/sendVerificationEmail");
+vi.mock("../../src/features/auth/authDTOMappers", () => ({
+  toRegisterDTO: (body: RegisterRequestDTO) => body
+}));
+
