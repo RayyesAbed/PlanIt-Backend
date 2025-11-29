@@ -37,4 +37,13 @@ describe("Test user registration cases", () => {
         expect(sendVerificationEmail).toHaveBeenCalled();
         expect(response.status).toHaveBeenCalledWith(200);
     });
+
+    it("should not create an existing user", async () => {
+        vi.mocked(User.findOne).mockResolvedValue({email: "abdallah@example.com"});
+        vi.mocked(createNewUser).mockResolvedValue({_id: "12345", toBeConfirmedEmail: "abdallah@example.com"} as any);
+        vi.mocked(signJWT).mockResolvedValue("fake-jwt-token");
+        vi.mocked(sendVerificationEmail).mockResolvedValue();
+
+
+    })
 })
