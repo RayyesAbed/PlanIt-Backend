@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { RegisterRequestDTO } from "../../authDTOs";
-import loadAwsSecrets from "../../../../configs/loadAwsSecrets";
+import loadSecrets from "../../../../configs/loadSecrets";
 import { randomUUID } from "crypto";
 import { Types } from "mongoose";
 
@@ -9,7 +9,7 @@ const signJWT = async (
   jwtSignPurpose: string,
   newUserId: Types.ObjectId
 ) => {
-  const { JWT_SECRET } = await loadAwsSecrets();
+  const { JWT_SECRET } = loadSecrets();
   const verificationToken = jwt.sign(
     {
       userId: newUserId,
