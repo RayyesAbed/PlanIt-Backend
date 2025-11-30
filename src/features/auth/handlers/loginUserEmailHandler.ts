@@ -5,13 +5,13 @@ import { validationResult } from "express-validator";
 import { toLoginDTO } from "../authDTOMappers";
 import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
-import loadAwsSecrets from "../../../configs/loadAwsSecrets";
+import loadSecrets from "../../../configs/loadSecrets";
 
 export const loginUserEmailHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  const { JWT_SECRET } = await loadAwsSecrets();
+  const { JWT_SECRET } = loadSecrets();
   try {
     // Get the validation result from the validator middleware assigned to the /login endpoint
 
