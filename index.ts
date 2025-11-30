@@ -10,7 +10,7 @@ import authRoutes from "./src/features/auth/authRoutes";
 import deleteUnverifiedEmails from "./src/jobs/deleteUnverifiedEmails";
 import { initGeoLite } from "./src/configs/geolite";
 import seedSubscriptions from "./src/seed/seedSubscriptions";
-import loadAwsSecrets from "./src/configs/loadAwsSecrets";
+import loadSecrets from "./src/configs/loadSecrets";
 
 const app = express();
 
@@ -23,7 +23,7 @@ const launchBackendServer = async () => {
     })
   );
 
-  await loadAwsSecrets();
+  loadSecrets();
 
   await initGeoLite();
 
