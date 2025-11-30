@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../../../schemas/User";
-import loadAwsSecrets from "../../../configs/loadAwsSecrets";
+import loadSecrets from "../../../configs/loadSecrets";
 
 export const verifyUserEmailHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
   // Load the JWT Secret
-  const { JWT_SECRET } = await loadAwsSecrets();
+  const { JWT_SECRET } = loadSecrets();
 
   // Get the token from the request and cast it to string
   const token = req.query.token as string;
