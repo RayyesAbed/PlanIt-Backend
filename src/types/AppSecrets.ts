@@ -6,6 +6,12 @@ type AppSecrets = {
   GMAIL_USER: string;
   GMAIL_PASSWORD: string;
   JWT_SECRET: string;
+  REDIS_HOST: string;
+  REDIS_USERNAME: string;
+  REDIS_PASSWORD: string;
+  REDIS_PORT: number;
+  REDIS_DB: number;
+  REDIS_MAX_RETRIES_PER_REQUEST: number;
 };
 
 export default AppSecrets;
