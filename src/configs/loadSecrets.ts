@@ -19,6 +19,14 @@ const loadSecrets = (): AppSecrets => {
     GMAIL_USER: assertEnv("GMAIL_USER"),
     GMAIL_PASSWORD: assertEnv("GMAIL_PASSWORD"),
     JWT_SECRET: assertEnv("JWT_SECRET"),
+    REDIS_HOST: assertEnv("REDIS_HOST"),
+    REDIS_USERNAME: assertEnv("REDIS_USERNAME"),
+    REDIS_PASSWORD: assertEnv("REDIS_PASSWORD"),
+    REDIS_PORT: Number(process.env.REDIS_PORT),
+    REDIS_DB: Number(process.env.REDIS_DB),
+    REDIS_MAX_RETRIES_PER_REQUEST: Number(
+      process.env.REDIS_MAX_RETRIES_PER_REQUEST
+    ),
   };
 };
 
