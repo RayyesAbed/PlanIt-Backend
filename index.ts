@@ -11,6 +11,7 @@ import deleteUnverifiedEmails from "./src/jobs/deleteUnverifiedEmails";
 import { initGeoLite } from "./src/configs/geolite";
 import seedSubscriptions from "./src/seed/seedSubscriptions";
 import loadSecrets from "./src/configs/loadSecrets";
+import { redisConnect } from "./src/configs/redis";
 
 const app = express();
 
@@ -24,6 +25,8 @@ const launchBackendServer = async () => {
   );
 
   loadSecrets();
+
+  redisConnect();
 
   await initGeoLite();
 
