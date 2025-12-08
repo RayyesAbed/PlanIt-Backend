@@ -3,7 +3,7 @@ import loadSecrets from "./loadSecrets";
 
 const redisCredentials = loadSecrets();
 
-const redis = new Redis({
+export const redis = new Redis({
   host: redisCredentials.REDIS_HOST,
   username: redisCredentials.REDIS_USERNAME,
   password: redisCredentials.REDIS_PASSWORD,
@@ -14,4 +14,12 @@ const redis = new Redis({
   enableReadyCheck: true,
 });
 
-export default redis;
+export const redisConnect = () => {
+  redis.on("connect", () => {
+    console.log("Redis connected");
+  });
+
+  redis.on("error", (err) => {
+    console.error("Redis error: ", err);
+  });
+};
