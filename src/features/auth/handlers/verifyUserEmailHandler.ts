@@ -17,6 +17,18 @@ export const verifyUserEmailHandler = async (
     return res.status(400).json({ message: "Verification token is missing" });
   }
 
+  let payload: any;
+
+  try {
+    payload = jwt.verify(token, JWT_SECRET);
+
+    if (typeof payload === "string") {
+      return res.status(400).json({ message: "Invalid token format" });
+    }
+  } catch (error: any) {
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
+
   try {
     const payload = jwt.verify(token, JWT_SECRET);
 
