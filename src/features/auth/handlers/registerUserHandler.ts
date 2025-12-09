@@ -48,7 +48,7 @@ export const registerUserRequestHandler = async (
     if (!existingUser) {
       const newUser = await createNewUser(registerCredentialsDTO, deviceIPv4);
 
-      const verificationToken = await signJWT(
+      const { verificationToken, jti } = await signJWT(
         registerCredentialsDTO,
         "register_user",
         newUser._id
