@@ -4,15 +4,18 @@ import User from "../../../schemas/User";
 import loadSecrets from "../../../configs/loadSecrets";
 import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
 
+const { JWT_SECRET } = loadSecrets();
+
 export const verifyUserEmailHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  // Load the JWT Secret
-  const { JWT_SECRET } = loadSecrets();
-
   // Get the token from the request and cast it to string
   const token = req.query.token as string;
+
+  if (!token) {
+    return res.status(400).json({ message: "Verification token is missing" });
+  }
 
   try {
     const payload = jwt.verify(token, JWT_SECRET);
