@@ -6,6 +6,7 @@ import sendVerificationEmail from "../utils/sendVerificationEmail";
 import createNewUser from "../services/register/createNewUser";
 import signJWT from "../services/common/signJWT";
 import supportedLanguages from "../../../resources/languages/supportedLanguages";
+import setRedisKey from "../services/common/setRedisKey";
 
 export const registerUserRequestHandler = async (
   req: Request,
@@ -53,6 +54,8 @@ export const registerUserRequestHandler = async (
         "register_user",
         newUser._id
       );
+
+      setRedisKey(jti, "false");
 
       await sendVerificationEmail(
         newUser.name,
