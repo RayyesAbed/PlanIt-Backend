@@ -9,6 +9,8 @@ const signJWT = async (
   jwtSignPurpose: string,
   newUserId: Types.ObjectId
 ) => {
+  const jti = randomUUID();
+
   const { JWT_SECRET } = loadSecrets();
   const verificationToken = jwt.sign(
     {
@@ -19,7 +21,7 @@ const signJWT = async (
     JWT_SECRET,
     {
       expiresIn: "1h",
-      jwtid: randomUUID(),
+      jwtid: jti,
     }
   );
 
