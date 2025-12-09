@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../../../schemas/User";
 import loadSecrets from "../../../configs/loadSecrets";
+import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
 
 export const verifyUserEmailHandler = async (
   req: Request,
@@ -19,6 +20,8 @@ export const verifyUserEmailHandler = async (
     if (typeof payload === "string") {
       return res.status(400).json({ message: "Invalid token format" });
     }
+
+    await getAndRevokeRedisKey(payload.jti ?? "");
 
     // If JWT token format is valid, then get the user Id
     const userId = payload.userId;
