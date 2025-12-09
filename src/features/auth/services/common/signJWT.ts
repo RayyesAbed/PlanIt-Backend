@@ -25,7 +25,7 @@ const signJWT = async (
     }
   );
 
-  return verificationToken;
+  return { verificationToken, jti };
 };
 
 export default signJWT;
