@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../../../schemas/User";
 import loadSecrets from "../../../configs/loadSecrets";
 import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
+import emailVerificationCodes from "../../../types/emailVerificationCodes";
 
 const { JWT_SECRET } = loadSecrets();
 
@@ -10,11 +11,10 @@ export const verifyUserEmailHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  // Get the token from the request and cast it to string
   const token = req.query.token as string;
 
   if (!token) {
-    return res.status(400).json({ message: "Verification token is missing" });
+    return res.status(400).json({ code: emailVerificationCodes.INVALID_TOKEN });
   }
 
   let payload: any;
@@ -23,10 +23,12 @@ export const verifyUserEmailHandler = async (
     payload = jwt.verify(token, JWT_SECRET);
 
     if (typeof payload === "string") {
-      return res.status(400).json({ message: "Invalid token format" });
+      return res
+        .status(400)
+        .json({ code: emailVerificationCodes.INVALID_TOKEN });
     }
   } catch (error: any) {
-    return res.status(401).json({ message: "Invalid or expired token" });
+    return res.status(401).json({ code: emailVerificationCodes.INVALID_TOKEN });
   }
 
   try {
@@ -45,8 +47,10 @@ export const verifyUserEmailHandler = async (
 
     // TODO: Create a User Tasks document after successfully creating the user document
 
-    return res.status(200).json({ message: "Email verified successfully" });
+    return res.status(200).json({
+      code: emailVerificationCodes.SUCCESS,
+    });
   } catch (error: any) {
-    return res.status(401).json({ message: error.message });
+    return res.status(401).json({ code: error.message });
   }
 };
