@@ -1,4 +1,5 @@
 import { redis } from "../../../../configs/redis";
+import emailVerificationCodes from "../../../../types/emailVerificationCodes";
 import setRedisKey from "./setRedisKey";
 
 const getAndRevokeRedisKey = async (jti: string) => {
@@ -8,9 +9,9 @@ const getAndRevokeRedisKey = async (jti: string) => {
     await setRedisKey(jti, "true");
     return true;
   } else if (value === "true") {
-    throw new Error("Email already verified");
+    throw new Error(emailVerificationCodes.ALREADY_VERIFIED);
   } else {
-    throw new Error("Expired verification link");
+    throw new Error(emailVerificationCodes.INVALID_TOKEN);
   }
 };
 
