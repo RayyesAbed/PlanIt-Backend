@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../../../schemas/User";
 import signJWT from "../services/common/signJWT";
 import { toResetPasswordRequestDTO } from "../authDTOMappers";
+import setRedisKey from "../services/common/setRedisKey";
 
 export const resetPasswordRequestHandler = async (
   req: Request,
@@ -19,6 +20,8 @@ export const resetPasswordRequestHandler = async (
       "reset_password",
       user._id
     );
+
+    setRedisKey(jti, "false");
   }
 
   return res.status(200).json({ code: "SUCCESS" });
