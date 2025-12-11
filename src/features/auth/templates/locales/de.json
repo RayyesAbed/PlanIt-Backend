@@ -7,6 +7,13 @@
     "footer": "Wir können es kaum erwarten, dein zukünftiges Ich zu sehen",
     "end": "Eine schöne Reise!"
   },
+  "passwordReset": {
+    "subject": "Setze dein Passwort zurück",
+    "greeting": "Hallo",
+    "bodyText": "Passwort vergessen? Kein Problem. Du kannst dein Passwort zurücksetzen, indem du auf den Bestätigungslink klickst.",
+    "buttonText": "Passwort zurücksetzen",
+    "footer": "Nicht du? Dann kannst du diese E-Mail ignorieren."
+  },
   "dir": "ltr",
   "textAlign": "left"
 }
