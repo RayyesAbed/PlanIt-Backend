@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import User from "../../../schemas/User";
+import signJWT from "../services/common/signJWT";
+import { toResetPasswordRequestDTO } from "../authDTOMappers";
 
 export const resetPasswordRequestHandler = async (
   req: Request,
@@ -10,6 +12,7 @@ export const resetPasswordRequestHandler = async (
   const user = await User.findOne({ confirmedEmail: confirmedEmail });
 
   if (user) {
+    const resetPasswordCredentials = toResetPasswordRequestDTO(user);
   }
 
   return res.status(200).json({ code: "SUCCESS" });
