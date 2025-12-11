@@ -13,6 +13,12 @@ export const resetPasswordRequestHandler = async (
 
   if (user) {
     const resetPasswordCredentials = toResetPasswordRequestDTO(user);
+
+    const { verificationToken, jti } = await signJWT(
+      resetPasswordCredentials,
+      "reset_password",
+      user._id
+    );
   }
 
   return res.status(200).json({ code: "SUCCESS" });
