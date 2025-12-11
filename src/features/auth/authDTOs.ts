@@ -10,3 +10,9 @@ export type LoginDTO = {
   email: string;
   password: string;
 };
+
+export type ResetPasswordRequestDTO = {
+  name: string;
+  confirmedEmail: string;
+  preferredLanguage: string;
+};
