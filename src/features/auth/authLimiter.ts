@@ -11,3 +11,9 @@ export const loginRateLimiter = rateLimit({
   limit: 3, // Only 3 possible login attempts per 1 hour
   message: "Too many login attempts! Please try again later",
 });
+
+export const resetPasswordRequestLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 3,
+  message: "Too many password reset attempts! Please try again later",
+});
