@@ -7,6 +7,13 @@
     "footer": "We can't wait to see your future self",
     "end": "Happy journey"
   },
+  "passwordReset": {
+    "subject": "Reset your password",
+    "greeting": "Hey",
+    "bodyText": "Forgot your password? No problem. You can reset your password clicking on the password verification link.",
+    "buttonText": "Reset my password",
+    "footer": "Not you? Then you can safely ignore this email"
+  },
   "dir": "ltr",
   "textAlign": "left"
 }
