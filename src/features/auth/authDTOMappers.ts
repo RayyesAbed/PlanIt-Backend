@@ -1,4 +1,8 @@
-import { LoginDTO, RegisterRequestDTO } from "./authDTOs";
+import {
+  LoginDTO,
+  RegisterRequestDTO,
+  ResetPasswordRequestDTO,
+} from "./authDTOs";
 
 export const toRegisterDTO = (credentials: any): RegisterRequestDTO => {
   return {
@@ -14,5 +18,15 @@ export const toLoginDTO = (credentials: any): LoginDTO => {
   return {
     email: credentials.email,
     password: credentials.password,
+  };
+};
+
+export const toResetPasswordRequestDTO = (
+  credentials: any
+): ResetPasswordRequestDTO => {
+  return {
+    name: credentials.name,
+    confirmedEmail: credentials.confirmedEmail,
+    preferredLanguage: credentials.preferredLanguage,
   };
 };
