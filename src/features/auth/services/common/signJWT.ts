@@ -7,14 +7,14 @@ import { Types } from "mongoose";
 const signJWT = async (
   credentialsDTO: RegisterRequestDTO | ResetPasswordRequestDTO,
   jwtSignPurpose: string,
-  newUserId: Types.ObjectId
+  userId: Types.ObjectId
 ) => {
   const jti = randomUUID();
 
   const { JWT_SECRET } = loadSecrets();
   const verificationToken = jwt.sign(
     {
-      userId: newUserId,
+      userId: userId,
       lang: credentialsDTO.preferredLanguage,
       purpose: jwtSignPurpose,
     },
