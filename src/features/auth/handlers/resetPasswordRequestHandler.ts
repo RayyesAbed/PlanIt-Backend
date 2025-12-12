@@ -3,6 +3,7 @@ import User from "../../../schemas/User";
 import signJWT from "../services/common/signJWT";
 import { toResetPasswordRequestDTO } from "../authDTOMappers";
 import setRedisKey from "../services/common/setRedisKey";
+import sendLinkWithEmail from "../utils/sendLinkWithEmail";
 
 export const resetPasswordRequestHandler = async (
   req: Request,
@@ -22,6 +23,14 @@ export const resetPasswordRequestHandler = async (
     );
 
     setRedisKey(jti, "false");
+
+    await sendLinkWithEmail(
+      user.name,
+      user.confirmedEmail as string,
+      user.preferredLanguage,
+      "passwordReset",
+      verificationToken
+    );
   }
 
   return res.status(200).json({ code: "SUCCESS" });
