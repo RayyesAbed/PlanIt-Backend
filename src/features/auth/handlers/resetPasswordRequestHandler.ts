@@ -5,6 +5,8 @@ import { toResetPasswordRequestDTO } from "../authDTOMappers";
 import setRedisKey from "../services/common/setRedisKey";
 import sendLinkWithEmail from "../utils/sendLinkWithEmail";
 
+const RESPONSE_DELAY_MS = Number(process.env.RESPONSE_DELAY_MS);
+
 export const resetPasswordRequestHandler = async (
   req: Request,
   res: Response
@@ -36,6 +38,9 @@ export const resetPasswordRequestHandler = async (
   } catch (error) {
     console.error("Reset password request failed: ", error);
   }
+
+  // Prevent enumeration timing attacks by setting artifical delay
+  await new Promise((resolve) => setTimeout(resolve, RESPONSE_DELAY_MS));
 
   return res.status(200).json({ code: "SUCCESS" });
 };
