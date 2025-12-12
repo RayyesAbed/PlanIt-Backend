@@ -11,26 +11,30 @@ export const resetPasswordRequestHandler = async (
 ): Promise<any> => {
   const confirmedEmail: string = req.body.email;
 
-  const user = await User.findOne({ confirmedEmail: confirmedEmail });
+  try {
+    const user = await User.findOne({ confirmedEmail: confirmedEmail });
 
-  if (user) {
-    const resetPasswordCredentials = toResetPasswordRequestDTO(user);
+    if (user) {
+      const resetPasswordCredentials = toResetPasswordRequestDTO(user);
 
-    const { verificationToken, jti } = await signJWT(
-      resetPasswordCredentials,
-      "reset_password",
-      user._id
-    );
+      const { verificationToken, jti } = await signJWT(
+        resetPasswordCredentials,
+        "reset_password",
+        user._id
+      );
 
-    setRedisKey(jti, "false");
+      setRedisKey(jti, "false");
 
-    await sendLinkWithEmail(
-      user.name,
-      user.confirmedEmail as string,
-      user.preferredLanguage,
-      "passwordReset",
-      verificationToken
-    );
+      await sendLinkWithEmail(
+        user.name,
+        user.confirmedEmail as string,
+        user.preferredLanguage,
+        "passwordReset",
+        verificationToken
+      );
+    }
+  } catch (error) {
+    console.error("Reset password request failed: ", error);
   }
 
   return res.status(200).json({ code: "SUCCESS" });
