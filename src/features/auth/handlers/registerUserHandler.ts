@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import User from "../../../schemas/User";
 import { toRegisterDTO } from "../authDTOMappers";
-import sendVerificationEmail from "../utils/sendVerificationEmail";
+import sendLinkWithEmail from "../utils/sendLinkWithEmail";
 import createNewUser from "../services/register/createNewUser";
 import signJWT from "../services/common/signJWT";
 import supportedLanguages from "../../../resources/languages/supportedLanguages";
@@ -57,10 +57,11 @@ export const registerUserRequestHandler = async (
 
       setRedisKey(jti, "false");
 
-      await sendVerificationEmail(
+      await sendLinkWithEmail(
         newUser.name,
         newUser.toBeConfirmedEmail!,
         newUser.preferredLanguage,
+        "emailVerify",
         verificationToken
       );
     }
