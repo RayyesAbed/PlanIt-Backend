@@ -2,7 +2,6 @@ import path from "path";
 import { promises as fs } from "fs";
 import compileTemplate from "./compileTemplate";
 import sendEmail from "../../../configs/nodemailer";
-import EmailTemplateData from "../templates/types/EmailTemplateData";
 
 const sendLinkWithEmail = async (
   userName: string,
@@ -23,15 +22,23 @@ const sendLinkWithEmail = async (
 
   const translations = JSON.parse(await fs.readFile(localePath, "utf8")); // Read translations
 
-  const verificationLink = `${FRONTEND_URL}/verify?token=${token}`;
+  let emailVerificationLink = "";
 
-  const t: EmailTemplateData["t"] = translations.verification; // access verification
+  let t; // Template data in Email (subject, greeting, bodyText, buttonText, footer)
+
+  if (templateName == "emailVerify") {
+    emailVerificationLink = `${FRONTEND_URL}/verify?token=${token}`;
+    t = translations.verification; // access verification
+  } else if (templateName == "passwordReset") {
+    emailVerificationLink = `${FRONTEND_URL}/verify?password-reset-token=${token}`;
+    t = translations.passwordReset; // access password reset
+  }
 
   const html = await compileTemplate(templateName, {
     userLanguage,
     dir: translations.dir,
     name: userName,
-    link: verificationLink,
+    link: emailVerificationLink,
     t,
   });
 
