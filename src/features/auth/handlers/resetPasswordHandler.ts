@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import validateInputs from "../utils/validateInputs";
 import verifyJWT from "../services/common/verifyJWT";
+import jwt from "jsonwebtoken";
 import emailVerificationCodes from "../../../types/emailVerificationCodes";
 
 export const resetPasswordHandler = async (
@@ -15,9 +16,10 @@ export const resetPasswordHandler = async (
 
   const token = req.query.token as string;
   const newPassword = req.body.newPassword;
+  let decoded: jwt.JwtPayload;
 
   try {
-    verifyJWT(token);
+    decoded = verifyJWT(token);
   } catch (error: any) {
     return res
       .status(401)
