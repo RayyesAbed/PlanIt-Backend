@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import validateInputs from "../utils/validateInputs";
+import verifyJWT from "../services/common/verifyJWT";
+import emailVerificationCodes from "../../../types/emailVerificationCodes";
 
 export const resetPasswordHandler = async (
   req: Request,
@@ -9,5 +11,16 @@ export const resetPasswordHandler = async (
     validateInputs(req);
   } catch (error: any) {
     return res.status(400).json({ message: error });
+  }
+
+  const token = req.query.token as string;
+  const newPassword = req.body.newPassword;
+
+  try {
+    verifyJWT(token);
+  } catch (error: any) {
+    return res
+      .status(401)
+      .json({ message: emailVerificationCodes.INVALID_TOKEN });
   }
 };
