@@ -13,6 +13,8 @@ const verifyJWT = (token: string) => {
 
   if (typeof payload == "string")
     throw new Error(emailVerificationCodes.INVALID_TOKEN);
+
+  return payload as jwt.JwtPayload;
 };
 
 export default verifyJWT;
