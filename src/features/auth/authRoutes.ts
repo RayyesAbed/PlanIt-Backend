@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { registerUserRequestHandler } from "./handlers/registerUserHandler";
-import { loginValidator, registerRequestValidator } from "./authValidators";
+import {
+  loginValidator,
+  registerRequestValidator,
+  resetPasswordValidator,
+} from "./authValidators";
 import {
   loginRateLimiter,
   registerRateLimiter,
@@ -10,6 +14,7 @@ import rejectNestedObjects from "../../middlewares/rejectNestedObjects";
 import { loginUserEmailHandler } from "./handlers/loginUserEmailHandler";
 import { verifyUserEmailHandler } from "./handlers/verifyUserEmailHandler";
 import { resetPasswordRequestHandler } from "./handlers/resetPasswordRequestHandler";
+import { resetPasswordHandler } from "./handlers/resetPasswordHandler";
 
 const authRoutes = Router();
 
@@ -35,6 +40,12 @@ authRoutes.post(
   "/reset-password-request",
   resetPasswordRequestLimiter,
   resetPasswordRequestHandler
+);
+
+authRoutes.patch(
+  "/reset-password",
+  resetPasswordValidator,
+  resetPasswordHandler
 );
 
 export default authRoutes;
