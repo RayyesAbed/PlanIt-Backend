@@ -8,6 +8,8 @@ import getAndRevokeRedisKey, {
   TokenNotFoundError,
 } from "../services/common/getAndRevokeRedisKey";
 import PasswordResetCode from "../types/PasswordResetCode";
+import User from "../../../schemas/User";
+import * as argon2 from "argon2";
 
 export const resetPasswordHandler = async (
   req: Request,
@@ -50,6 +52,10 @@ export const resetPasswordHandler = async (
       code: "INTERNAL_ERROR",
     });
   }
+
+  await User.findByIdAndUpdate(decoded.userId, {
+    password: await argon2.hash(newPassword),
+  });
 
   return res.status(200).json({ message: emailVerificationCodes.SUCCESS });
 };
