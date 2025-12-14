@@ -1,0 +1,7 @@
+enum PasswordResetCode {
+  SUCCESS = "PASSWORD_RESET_SUCCESS",
+  ALREADY_USED = "PASSWORD_RESET_ALREADY_USED",
+  INVALID_TOKEN = "PASSWORD_RESET_INVALID_TOKEN",
+}
+
+export default PasswordResetCode;
