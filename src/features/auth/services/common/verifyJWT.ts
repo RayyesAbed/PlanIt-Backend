@@ -1,20 +1,26 @@
+import jwt, { JwtPayload } from "jsonwebtoken";
 import loadSecrets from "../../../../configs/loadSecrets";
-import jwt from "jsonwebtoken";
-import emailVerificationCodes from "../../../../types/emailVerificationCodes";
 
 const { JWT_SECRET } = loadSecrets();
 
-const verifyJWT = (token: string) => {
-  if (!token) throw new Error(emailVerificationCodes.INVALID_TOKEN);
+export class InvalidJwtError extends Error {
+  constructor() {
+    super("INVALID_JWT");
+  }
+}
 
-  let payload: any;
+const verifyJWT = (token?: string): JwtPayload => {
+  if (!token) {
+    throw new InvalidJwtError();
+  }
 
-  payload = jwt.verify(token, JWT_SECRET);
+  const payload = jwt.verify(token, JWT_SECRET);
 
-  if (typeof payload == "string")
-    throw new Error(emailVerificationCodes.INVALID_TOKEN);
+  if (typeof payload === "string") {
+    throw new InvalidJwtError();
+  }
 
-  return payload as jwt.JwtPayload;
+  return payload;
 };
 
 export default verifyJWT;
