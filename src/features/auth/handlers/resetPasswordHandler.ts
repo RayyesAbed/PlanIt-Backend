@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import validateInputs from "../utils/validateInputs";
 import verifyJWT from "../services/common/verifyJWT";
 import jwt from "jsonwebtoken";
-import emailVerificationCodes from "../../../types/emailVerificationCodes";
+import emailVerificationCodes from "../types/emailVerificationCodes";
 
 export const resetPasswordHandler = async (
   req: Request,
