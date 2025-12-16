@@ -8,6 +8,7 @@ import signJWT from "../services/common/signJWT";
 import setRedisKey from "../services/common/setRedisKey";
 import validateInputs from "../utils/validateInputs";
 import checkSupportedLanguage from "../utils/checkSupportedLanguage";
+import handleControllerError from "../utils/handleControllerError";
 
 export const registerUserRequestHandler = async (
   req: Request,
@@ -53,11 +54,11 @@ export const registerUserRequestHandler = async (
       );
     }
 
-    return res.status(200).json({
+    return res.status(201).json({
       message: "If this is your first time, we've sent a verification email.",
     });
   } catch (error) {
     console.error("Error registering user in controller:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return handleControllerError(error, res);
   }
 };
