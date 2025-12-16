@@ -6,14 +6,14 @@ import User from "../../../../schemas/User";
 
 const createNewUser = async (
   registerCredentialsDTO: RegisterRequestDTO,
-  deviceIPv4: string
+  deviceIPv6: string
 ) => {
   const hashedPassword = await argon2.hash(registerCredentialsDTO.password);
   const freePlan = await Subscription.findOne({ name: "Free" });
 
   if (!freePlan) throw new Error("Free subscription plan not found");
 
-  const currencySymbol = getCurrencyFromIP(deviceIPv4);
+  const currencySymbol = getCurrencyFromIP(deviceIPv6);
 
   const newUser = await User.create({
     name: registerCredentialsDTO.name,
