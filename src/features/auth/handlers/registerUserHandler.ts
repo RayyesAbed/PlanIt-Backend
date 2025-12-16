@@ -24,8 +24,6 @@ export const registerUserRequestHandler = async (
 
     if (!deviceIPv6) throw new Error("Device IP not found");
 
-    const deviceIPv4 = deviceIPv6.substring(7);
-
     const registerCredentialsDTO = toRegisterDTO(req.body);
 
     if (
@@ -44,7 +42,7 @@ export const registerUserRequestHandler = async (
     });
 
     if (!existingUser) {
-      const newUser = await createNewUser(registerCredentialsDTO, deviceIPv4);
+      const newUser = await createNewUser(registerCredentialsDTO, deviceIPv6);
 
       const { verificationToken, jti } = await signJWT(
         registerCredentialsDTO,
