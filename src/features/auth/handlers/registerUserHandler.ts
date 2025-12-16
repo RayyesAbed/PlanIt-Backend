@@ -7,22 +7,19 @@ import createNewUser from "../services/register/createNewUser";
 import signJWT from "../services/common/signJWT";
 import supportedLanguages from "../../../resources/languages/supportedLanguages";
 import setRedisKey from "../services/common/setRedisKey";
+import validateInputs from "../utils/validateInputs";
 
 export const registerUserRequestHandler = async (
   req: Request,
   res: Response
 ): Promise<any> => {
   try {
-    // Get the validation result from the validator middleware assigned to the /register_request endpoint
+    validateInputs(req);
+  } catch (error) {
+    return res.status(400).json({ message: error });
+  }
 
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    // If there are no validation errors, then proceed
-
+  try {
     const deviceIPv6 = req.ip; // Express req returns IPv6 representation
 
     if (!deviceIPv6) throw new Error("Device IP not found");
