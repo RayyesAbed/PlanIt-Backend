@@ -5,9 +5,9 @@ import { toRegisterDTO } from "../authDTOMappers";
 import sendLinkWithEmail from "../utils/sendLinkWithEmail";
 import createNewUser from "../services/register/createNewUser";
 import signJWT from "../services/common/signJWT";
-import supportedLanguages from "../../../resources/languages/supportedLanguages";
 import setRedisKey from "../services/common/setRedisKey";
 import validateInputs from "../utils/validateInputs";
+import checkSupportedLanguage from "../utils/checkSupportedLanguage";
 
 export const registerUserRequestHandler = async (
   req: Request,
@@ -22,11 +22,7 @@ export const registerUserRequestHandler = async (
 
     const registerCredentialsDTO = toRegisterDTO(req.body);
 
-    if (
-      !supportedLanguages.includes(registerCredentialsDTO.preferredLanguage)
-    ) {
-      throw new Error("Preferred language currently not supported");
-    }
+    checkSupportedLanguage(registerCredentialsDTO.preferredLanguage);
 
     // Find user either by 'confirmedEmail' or 'toBeConfirmedEmail' attributes in MongoDB
 
