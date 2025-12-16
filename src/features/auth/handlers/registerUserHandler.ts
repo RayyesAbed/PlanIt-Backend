@@ -15,11 +15,7 @@ export const registerUserRequestHandler = async (
 ): Promise<any> => {
   try {
     validateInputs(req);
-  } catch (error) {
-    return res.status(400).json({ message: error });
-  }
 
-  try {
     const deviceIPv6 = req.ip; // Express req returns IPv6 representation
 
     if (!deviceIPv6) throw new Error("Device IP not found");
