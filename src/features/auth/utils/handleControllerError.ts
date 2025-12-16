@@ -5,6 +5,7 @@ export default function handleControllerError(error: unknown, res: Response) {
   if (error instanceof HttpError) {
     return res.status(error.statusCode).json({
       message: error.message,
+      details: error.details,
     });
   }
 
