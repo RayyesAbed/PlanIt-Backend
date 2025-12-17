@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../../../schemas/User";
 import loadSecrets from "../../../configs/loadSecrets";
 import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
-import emailVerificationCodes from "../../../types/emailVerificationCodes";
+import emailVerificationCodes from "../types/emailVerificationCodes";
 
 const { JWT_SECRET } = loadSecrets();
 
