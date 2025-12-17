@@ -15,13 +15,16 @@ const verifyJWT = (token?: string): JwtPayload => {
     throw new InvalidJwtError();
   }
 
-  const payload = jwt.verify(token, JWT_SECRET);
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+    if (typeof payload === "string") {
+      throw new InvalidJwtError();
+    }
 
-  if (typeof payload === "string") {
+    return payload;
+  } catch (error: unknown) {
     throw new InvalidJwtError();
   }
-
-  return payload;
 };
 
 export default verifyJWT;
