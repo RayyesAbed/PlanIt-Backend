@@ -3,6 +3,7 @@ import User from "../../../schemas/User";
 import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
 import emailVerificationCodes from "../types/emailVerificationCodes";
 import verifyJWT from "../services/common/verifyJWT";
+import handleControllerError from "../utils/handleControllerError";
 
 export const verifyUserEmailHandler = async (
   req: Request,
@@ -32,6 +33,6 @@ export const verifyUserEmailHandler = async (
       code: emailVerificationCodes.SUCCESS,
     });
   } catch (error: any) {
-    return res.status(401).json({ code: error.message });
+    return handleControllerError(error, res);
   }
 };
