@@ -1,11 +1,12 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import loadSecrets from "../../../../configs/loadSecrets";
+import HttpError from "../../../../errors/HttpError";
 
 const { JWT_SECRET } = loadSecrets();
 
-export class InvalidJwtError extends Error {
+export class InvalidJwtError extends HttpError {
   constructor() {
-    super("INVALID_JWT");
+    super("INVALID_JWT", 401);
   }
 }
 
