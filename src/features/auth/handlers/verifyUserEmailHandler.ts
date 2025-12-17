@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import User from "../../../schemas/User";
-import loadSecrets from "../../../configs/loadSecrets";
 import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
 import emailVerificationCodes from "../types/emailVerificationCodes";
-
-const { JWT_SECRET } = loadSecrets();
+import verifyJWT from "../services/common/verifyJWT";
 
 export const verifyUserEmailHandler = async (
   req: Request,
@@ -13,25 +10,9 @@ export const verifyUserEmailHandler = async (
 ): Promise<any> => {
   const token = req.query.token as string;
 
-  if (!token) {
-    return res.status(400).json({ code: emailVerificationCodes.INVALID_TOKEN });
-  }
-
-  let payload: any;
-
   try {
-    payload = jwt.verify(token, JWT_SECRET);
+    const payload = verifyJWT(token);
 
-    if (typeof payload === "string") {
-      return res
-        .status(400)
-        .json({ code: emailVerificationCodes.INVALID_TOKEN });
-    }
-  } catch (error: any) {
-    return res.status(401).json({ code: emailVerificationCodes.INVALID_TOKEN });
-  }
-
-  try {
     await getAndRevokeRedisKey(payload.jti ?? "");
 
     const user = await User.findById(payload.userId);
