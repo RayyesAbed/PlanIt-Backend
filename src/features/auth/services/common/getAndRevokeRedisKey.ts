@@ -1,16 +1,17 @@
 import { redis } from "../../../../configs/redis";
 import HttpError from "../../../../errors/HttpError";
+import emailVerificationCodes from "../../types/emailVerificationCodes";
 import setRedisKey from "./setRedisKey";
 
 export class TokenAlreadyUsedError extends HttpError {
   constructor() {
-    super("TOKEN_ALREADY_USED", 401);
+    super(emailVerificationCodes.ALREADY_VERIFIED, 401);
   }
 }
 
 export class TokenNotFoundError extends HttpError {
   constructor() {
-    super("TOKEN_NOT_FOUND", 401);
+    super(emailVerificationCodes.INVALID_TOKEN, 401);
   }
 }
 
