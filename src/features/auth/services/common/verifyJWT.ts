@@ -1,12 +1,13 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import loadSecrets from "../../../../configs/loadSecrets";
 import HttpError from "../../../../errors/HttpError";
+import emailVerificationCodes from "../../types/emailVerificationCodes";
 
 const { JWT_SECRET } = loadSecrets();
 
 export class InvalidJwtError extends HttpError {
   constructor() {
-    super("INVALID_JWT", 401);
+    super(emailVerificationCodes.INVALID_TOKEN, 401);
   }
 }
 
