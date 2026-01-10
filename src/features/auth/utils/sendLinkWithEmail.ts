@@ -30,7 +30,7 @@ const sendLinkWithEmail = async (
     emailVerificationLink = `${FRONTEND_URL}/verify?token=${token}`;
     t = translations.verification; // access verification
   } else if (templateName == "passwordReset") {
-    emailVerificationLink = `${FRONTEND_URL}/verify?password-reset-token=${token}`;
+    emailVerificationLink = `${FRONTEND_URL}/password-reset?token=${token}`;
     t = translations.passwordReset; // access password reset
   }
 
