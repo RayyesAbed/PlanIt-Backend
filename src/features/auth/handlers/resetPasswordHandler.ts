@@ -30,9 +30,9 @@ export const resetPasswordHandler = async (
     await User.findByIdAndUpdate(decoded.userId, {
       password: await argon2.hash(newPassword),
     });
+
+    return res.status(200).json({ message: emailVerificationCodes.SUCCESS });
   } catch (error) {
     return handleControllerError(error, res);
   }
-
-  return res.status(200).json({ message: emailVerificationCodes.SUCCESS });
 };
