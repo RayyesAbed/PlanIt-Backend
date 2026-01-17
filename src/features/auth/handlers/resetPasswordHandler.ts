@@ -26,13 +26,13 @@ export const resetPasswordHandler = async (
     decoded = verifyJWT(token);
 
     await getAndRevokeRedisKey(decoded.jti as string);
+
+    await User.findByIdAndUpdate(decoded.userId, {
+      password: await argon2.hash(newPassword),
+    });
   } catch (error) {
     return handleControllerError(error, res);
   }
-
-  await User.findByIdAndUpdate(decoded.userId, {
-    password: await argon2.hash(newPassword),
-  });
 
   return res.status(200).json({ message: emailVerificationCodes.SUCCESS });
 };
