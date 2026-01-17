@@ -3,11 +3,7 @@ import validateInputs from "../utils/validateInputs";
 import verifyJWT from "../services/common/verifyJWT";
 import jwt from "jsonwebtoken";
 import emailVerificationCodes from "../types/emailVerificationCodes";
-import getAndRevokeRedisKey, {
-  TokenAlreadyUsedError,
-  TokenNotFoundError,
-} from "../services/common/getAndRevokeRedisKey";
-import PasswordResetCode from "../types/PasswordResetCode";
+import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
 import User from "../../../schemas/User";
 import * as argon2 from "argon2";
 import handleControllerError from "../utils/handleControllerError";
