@@ -24,28 +24,10 @@ export const resetPasswordHandler = async (
     let decoded: jwt.JwtPayload;
 
     decoded = verifyJWT(token);
+
+    await getAndRevokeRedisKey(decoded.jti as string);
   } catch (error) {
     return handleControllerError(error, res);
-  }
-
-  try {
-    await getAndRevokeRedisKey(decoded.jti as string);
-  } catch (error: any) {
-    if (error instanceof TokenAlreadyUsedError) {
-      return res.status(409).json({
-        code: PasswordResetCode.ALREADY_USED,
-      });
-    }
-
-    if (error instanceof TokenNotFoundError) {
-      return res.status(401).json({
-        code: PasswordResetCode.INVALID_TOKEN,
-      });
-    }
-
-    return res.status(500).json({
-      code: "INTERNAL_ERROR",
-    });
   }
 
   await User.findByIdAndUpdate(decoded.userId, {
