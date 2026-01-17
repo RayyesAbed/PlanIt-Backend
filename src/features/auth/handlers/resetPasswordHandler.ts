@@ -18,13 +18,13 @@ export const resetPasswordHandler = async (
 ): Promise<any> => {
   try {
     validateInputs(req);
+
+    const token = req.query.token as string;
+    const newPassword = req.body.newPassword;
+    let decoded: jwt.JwtPayload;
   } catch (error) {
     return handleControllerError(error, res);
   }
-
-  const token = req.query.token as string;
-  const newPassword = req.body.newPassword;
-  let decoded: jwt.JwtPayload;
 
   try {
     decoded = verifyJWT(token);
