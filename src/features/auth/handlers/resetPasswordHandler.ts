@@ -22,16 +22,10 @@ export const resetPasswordHandler = async (
     const token = req.query.token as string;
     const newPassword = req.body.newPassword;
     let decoded: jwt.JwtPayload;
+
+    decoded = verifyJWT(token);
   } catch (error) {
     return handleControllerError(error, res);
-  }
-
-  try {
-    decoded = verifyJWT(token);
-  } catch (error: any) {
-    return res
-      .status(401)
-      .json({ message: emailVerificationCodes.INVALID_TOKEN });
   }
 
   try {
