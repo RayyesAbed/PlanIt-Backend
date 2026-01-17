@@ -10,15 +10,16 @@ import getAndRevokeRedisKey, {
 import PasswordResetCode from "../types/PasswordResetCode";
 import User from "../../../schemas/User";
 import * as argon2 from "argon2";
+import handleControllerError from "../utils/handleControllerError";
 
 export const resetPasswordHandler = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<any> => {
   try {
     validateInputs(req);
-  } catch (error: any) {
-    return res.status(400).json({ message: error });
+  } catch (error) {
+    return handleControllerError(error, res);
   }
 
   const token = req.query.token as string;
