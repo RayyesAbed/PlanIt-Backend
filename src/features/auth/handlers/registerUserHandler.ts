@@ -24,8 +24,6 @@ export const registerUserRequestHandler = async (
 
     checkSupportedLanguage(registerCredentialsDTO.preferredLanguage);
 
-    // Find user either by 'confirmedEmail' or 'toBeConfirmedEmail' attributes in MongoDB
-
     const existingUser = await User.findOne({
       $or: [
         { confirmedEmail: registerCredentialsDTO.toBeConfirmedEmail },
