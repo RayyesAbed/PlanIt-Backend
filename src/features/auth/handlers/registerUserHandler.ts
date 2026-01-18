@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
 import User from "../../../schemas/User";
 import { toRegisterDTO } from "../authDTOMappers";
 import sendLinkWithEmail from "../utils/sendLinkWithEmail";
