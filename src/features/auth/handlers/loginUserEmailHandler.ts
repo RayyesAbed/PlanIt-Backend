@@ -6,6 +6,7 @@ import { toLoginDTO } from "../authDTOMappers";
 import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import loadSecrets from "../../../configs/loadSecrets";
+import enLoginStatus from "../types/enLoginStatus";
 
 export const loginUserEmailHandler = async (
   req: Request,
