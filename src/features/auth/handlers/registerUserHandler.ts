@@ -52,7 +52,7 @@ export const registerUserRequestHandler = async (
     }
 
     return res.status(201).json({
-      message: "ACCOUNT_CREATED_AWAITING_VERIFICATION",
+      code: "ACCOUNT_CREATED_AWAITING_VERIFICATION",
     });
   } catch (error) {
     console.error("Error registering user in controller:", error);
