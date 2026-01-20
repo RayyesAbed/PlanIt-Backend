@@ -47,11 +47,11 @@ export const loginUserEmailHandler = async (
 
         return res
           .status(200)
-          .json({ code: "logged in successfully", token: loginToken });
+          .json({ code: enLoginStatus.LOGIN_SUCCESSFUL, token: loginToken });
       }
     }
 
-    return res.status(401).json({ code: "Incorrect email, password, or both" });
+    return res.status(401).json({ code: enLoginStatus.INCORRECT_EMAIL_PASSWORD });
   } catch (error) {
     console.error("Error while logging the user in the handler:", error);
     return res.status(500).json({ message: "Internal server error" });
