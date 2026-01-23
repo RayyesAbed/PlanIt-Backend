@@ -12,6 +12,7 @@ type AppSecrets = {
   REDIS_PORT: number;
   REDIS_DB: number;
   REDIS_MAX_RETRIES_PER_REQUEST: number;
+  SENTRY_DSN: string;
 };
 
 export default AppSecrets;
