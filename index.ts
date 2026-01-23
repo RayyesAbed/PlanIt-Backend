@@ -4,6 +4,8 @@ dotenv.config({ path: ".env.development" });
 
 // Then import modules and functions
 import express from "express";
+import sentryConfig from "./src/configs/sentryConfig";
+import * as Sentry from "@sentry/node"
 import cors from "cors";
 import mongooseConnect from "./src/configs/mongooseConnect";
 import authRoutes from "./src/features/auth/authRoutes";
@@ -37,6 +39,9 @@ const launchBackendServer = async () => {
   await deleteUnverifiedEmails.start();
 
   app.use("/auth", authRoutes);
+  
+  Sentry.setupExpressErrorHandler(app);
+
   app.listen(3000);
 };
 
