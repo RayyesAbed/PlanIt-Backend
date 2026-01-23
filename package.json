@@ -29,6 +29,7 @@
     "@aws-sdk/client-s3": "^3.837.0",
     "@google/generative-ai": "^0.24.1",
     "@maxmind/geoip2-node": "^6.1.0",
+    "@sentry/node": "^10.36.0",
     "@types/cors": "^2.8.19",
     "argon2": "^0.43.0",
     "cors": "^2.8.5",
