@@ -27,6 +27,7 @@ const loadSecrets = (): AppSecrets => {
     REDIS_MAX_RETRIES_PER_REQUEST: Number(
       process.env.REDIS_MAX_RETRIES_PER_REQUEST
     ),
+    SENTRY_DSN: assertEnv("SENTRY_DSN")
   };
 };
 
