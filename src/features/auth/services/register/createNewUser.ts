@@ -6,26 +6,30 @@ import User from "../../../../schemas/User";
 
 const createNewUser = async (
   registerCredentialsDTO: RegisterRequestDTO,
-  deviceIPv6: string
+  deviceIPv6: string,
 ) => {
-  const hashedPassword = await argon2.hash(registerCredentialsDTO.password);
-  const freePlan = await Subscription.findOne({ name: "Free" });
+  try {
+    const hashedPassword = await argon2.hash(registerCredentialsDTO.password);
+    const freePlan = await Subscription.findOne({ name: "Free" });
 
-  if (!freePlan) throw new Error("Free subscription plan not found");
+    if (!freePlan) throw new Error("Free subscription plan not found");
 
-  const currencySymbol = getCurrencyFromIP(deviceIPv6);
+    const currencySymbol = getCurrencyFromIP(deviceIPv6);
 
-  const newUser = await User.create({
-    name: registerCredentialsDTO.name,
-    toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail,
-    birthDate: registerCredentialsDTO.birthDate,
-    preferredLanguage: registerCredentialsDTO.preferredLanguage,
-    subscription: freePlan._id,
-    currency: currencySymbol,
-    password: hashedPassword,
-  });
+    const newUser = await User.create({
+      name: registerCredentialsDTO.name,
+      toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail,
+      birthDate: registerCredentialsDTO.birthDate,
+      preferredLanguage: registerCredentialsDTO.preferredLanguage,
+      subscription: freePlan._id,
+      currency: currencySymbol,
+      password: hashedPassword,
+    });
 
-  return newUser;
+    return newUser;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default createNewUser;
