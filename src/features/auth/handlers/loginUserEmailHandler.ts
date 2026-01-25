@@ -7,22 +7,15 @@ import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import loadSecrets from "../../../configs/loadSecrets";
 import enLoginStatus from "../types/enLoginStatus";
+import validateInputs from "../utils/validateInputs";
 
 export const loginUserEmailHandler = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<any> => {
   const { JWT_SECRET } = loadSecrets();
   try {
-    // Get the validation result from the validator middleware assigned to the /login endpoint
-
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    // If there are no validation errors, then proceed
+    validateInputs(req);
 
     let loginCredentialsDTO = toLoginDTO(req.body);
 
@@ -35,7 +28,7 @@ export const loginUserEmailHandler = async (
     if (existingUser) {
       const doPasswordsMatch = await argon2.verify(
         existingUser.password,
-        loginCredentialsDTO.password
+        loginCredentialsDTO.password,
       );
 
       if (doPasswordsMatch) {
@@ -52,7 +45,9 @@ export const loginUserEmailHandler = async (
       }
     }
 
-    return res.status(401).json({ code: enLoginStatus.INCORRECT_EMAIL_PASSWORD });
+    return res
+      .status(401)
+      .json({ code: enLoginStatus.INCORRECT_EMAIL_PASSWORD });
   } catch (error) {
     console.error("Error while logging the user in the handler:", error);
     return res.status(500).json({ message: "Internal server error" });
