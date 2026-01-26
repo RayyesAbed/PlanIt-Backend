@@ -9,7 +9,7 @@ const RESPONSE_DELAY_MS = Number(process.env.RESPONSE_DELAY_MS);
 
 export const resetPasswordRequestHandler = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<any> => {
   const confirmedEmail: string = req.body.email;
 
@@ -19,10 +19,10 @@ export const resetPasswordRequestHandler = async (
     if (user) {
       const resetPasswordCredentials = toResetPasswordRequestDTO(user);
 
-      const { verificationToken, jti } = await signJWT(
+      const { token, jti } = signJWT(
         resetPasswordCredentials,
         "reset_password",
-        user._id
+        user._id,
       );
 
       setRedisKey(jti, "false");
@@ -32,7 +32,7 @@ export const resetPasswordRequestHandler = async (
         user.confirmedEmail as string,
         user.preferredLanguage,
         "passwordReset",
-        verificationToken
+        token,
       );
     }
   } catch (error) {
