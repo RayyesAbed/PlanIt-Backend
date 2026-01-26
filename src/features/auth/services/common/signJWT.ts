@@ -8,7 +8,7 @@ import loadSecrets from "../../../../configs/loadSecrets";
 import { randomUUID } from "crypto";
 import { Types } from "mongoose";
 
-const signJWT = async (
+const signJWT = (
   credentialsDTO: RegisterRequestDTO | ResetPasswordRequestDTO | LoginDTO,
   jwtSignPurpose: string,
   userId: Types.ObjectId,
