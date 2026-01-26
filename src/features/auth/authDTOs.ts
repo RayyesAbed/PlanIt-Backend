@@ -8,6 +8,7 @@ export type RegisterRequestDTO = {
 
 export type LoginDTO = {
   email: string;
+  preferredLanguage: string;
   password: string;
 };
 
