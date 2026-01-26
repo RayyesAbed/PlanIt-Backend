@@ -1,11 +1,15 @@
 import jwt from "jsonwebtoken";
-import { RegisterRequestDTO, ResetPasswordRequestDTO } from "../../authDTOs";
+import {
+  LoginDTO,
+  RegisterRequestDTO,
+  ResetPasswordRequestDTO,
+} from "../../authDTOs";
 import loadSecrets from "../../../../configs/loadSecrets";
 import { randomUUID } from "crypto";
 import { Types } from "mongoose";
 
 const signJWT = async (
-  credentialsDTO: RegisterRequestDTO | ResetPasswordRequestDTO,
+  credentialsDTO: RegisterRequestDTO | ResetPasswordRequestDTO | LoginDTO,
   jwtSignPurpose: string,
   userId: Types.ObjectId,
 ) => {
