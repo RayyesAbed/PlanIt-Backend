@@ -17,7 +17,7 @@ const signJWT = (
     const jti = randomUUID();
 
     const { JWT_SECRET } = loadSecrets();
-    const verificationToken = jwt.sign(
+    const token = jwt.sign(
       {
         userId: userId,
         lang: credentialsDTO.preferredLanguage,
@@ -30,7 +30,7 @@ const signJWT = (
       },
     );
 
-    return { verificationToken, jti };
+    return { token, jti };
   } catch (error) {
     throw error;
   }
