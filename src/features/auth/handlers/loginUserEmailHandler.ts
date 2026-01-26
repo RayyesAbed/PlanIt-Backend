@@ -27,6 +27,8 @@ export const loginUserEmailHandler = async (
     }).lean();
 
     if (existingUser) {
+      const loginCredentialsDTO = toLoginDTO(existingUser);
+
       const doPasswordsMatch = await argon2.verify(
         existingUser.password,
         password,
