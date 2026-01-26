@@ -26,9 +26,9 @@ export const loginUserEmailHandler = async (
       const doPasswordsMatch = await argon2.verify(loginDTO.password, password);
 
       if (doPasswordsMatch) {
-        const loginToken = await signJWT(loginDTO, "login", existingUser._id);
+        const loginToken = signJWT(loginDTO, "login", existingUser._id);
 
-        res.cookie("login", loginToken.verificationToken, {
+        res.cookie("login", loginToken.token, {
           httpOnly: true,
           sameSite: "strict",
         });
