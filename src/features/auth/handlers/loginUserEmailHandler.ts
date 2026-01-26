@@ -18,6 +18,7 @@ export const loginUserEmailHandler = async (
     validateInputs(req);
 
     const email = req.body.email;
+    const password = req.body.password;
 
     // Find user either by email attribute in MongoDB, and only return the object with lean()
 
@@ -28,7 +29,7 @@ export const loginUserEmailHandler = async (
     if (existingUser) {
       const doPasswordsMatch = await argon2.verify(
         existingUser.password,
-        loginCredentialsDTO.password,
+        password,
       );
 
       if (doPasswordsMatch) {
