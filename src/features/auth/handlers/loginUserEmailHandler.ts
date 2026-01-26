@@ -30,7 +30,7 @@ export const loginUserEmailHandler = async (
       const loginCredentialsDTO = toLoginDTO(existingUser);
 
       const doPasswordsMatch = await argon2.verify(
-        existingUser.password,
+        loginCredentialsDTO.password,
         password,
       );
 
