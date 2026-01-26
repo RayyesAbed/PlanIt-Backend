@@ -44,9 +44,7 @@ export const loginUserEmailHandler = async (
 
         res.cookie("login", loginToken, { httpOnly: true, sameSite: "strict" });
 
-        return res
-          .status(200)
-          .json({ code: enLoginStatus.LOGIN_SUCCESSFUL, token: loginToken });
+        return res.status(200).json({ code: enLoginStatus.LOGIN_SUCCESSFUL });
       }
     }
 
