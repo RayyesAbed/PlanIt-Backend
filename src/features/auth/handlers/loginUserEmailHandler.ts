@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 import loadSecrets from "../../../configs/loadSecrets";
 import enLoginStatus from "../types/enLoginStatus";
 import validateInputs from "../utils/validateInputs";
+import signJWT from "../services/common/signJWT";
 
 export const loginUserEmailHandler = async (
   req: Request,
@@ -35,10 +36,11 @@ export const loginUserEmailHandler = async (
       );
 
       if (doPasswordsMatch) {
-        const loginToken = jwt.sign({ userId: existingUser._id }, JWT_SECRET, {
-          expiresIn: "1h",
-          jwtid: randomUUID(),
-        });
+        const loginToken = await signJWT(
+          loginCredentialsDTO,
+          "login",
+          existingUser._id,
+        );
 
         res.cookie("login", loginToken, { httpOnly: true, sameSite: "strict" });
 
