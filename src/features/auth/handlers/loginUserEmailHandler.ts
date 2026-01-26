@@ -21,19 +21,12 @@ export const loginUserEmailHandler = async (
     }).lean();
 
     if (existingUser) {
-      const loginCredentialsDTO = toLoginDTO(existingUser);
+      const loginDTO = toLoginDTO(existingUser);
 
-      const doPasswordsMatch = await argon2.verify(
-        loginCredentialsDTO.password,
-        password,
-      );
+      const doPasswordsMatch = await argon2.verify(loginDTO.password, password);
 
       if (doPasswordsMatch) {
-        const loginToken = await signJWT(
-          loginCredentialsDTO,
-          "login",
-          existingUser._id,
-        );
+        const loginToken = await signJWT(loginDTO, "login", existingUser._id);
 
         res.cookie("login", loginToken.verificationToken, {
           httpOnly: true,
