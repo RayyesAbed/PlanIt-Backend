@@ -17,12 +17,12 @@ export const loginUserEmailHandler = async (
   try {
     validateInputs(req);
 
-    let loginCredentialsDTO = toLoginDTO(req.body);
+    const email = req.body.email;
 
     // Find user either by email attribute in MongoDB, and only return the object with lean()
 
     const existingUser = await User.findOne({
-      confirmedEmail: loginCredentialsDTO.email,
+      confirmedEmail: email,
     }).lean();
 
     if (existingUser) {
