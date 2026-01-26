@@ -11,7 +11,7 @@ import handleControllerError from "../utils/handleControllerError";
 
 export const registerUserRequestHandler = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<any> => {
   try {
     validateInputs(req);
@@ -34,10 +34,10 @@ export const registerUserRequestHandler = async (
     if (!existingUser) {
       const newUser = await createNewUser(registerCredentialsDTO, deviceIPv6);
 
-      const { verificationToken, jti } = await signJWT(
+      const { token, jti } = signJWT(
         registerCredentialsDTO,
         "register_user",
-        newUser._id
+        newUser._id,
       );
 
       setRedisKey(jti, "false");
@@ -47,7 +47,7 @@ export const registerUserRequestHandler = async (
         newUser.toBeConfirmedEmail!,
         newUser.preferredLanguage,
         "emailVerify",
-        verificationToken
+        token,
       );
     }
 
