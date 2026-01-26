@@ -17,12 +17,13 @@ export const toRegisterDTO = (credentials: any): RegisterRequestDTO => {
 export const toLoginDTO = (credentials: any): LoginDTO => {
   return {
     email: credentials.email,
+    preferredLanguage: credentials.preferredLanguage,
     password: credentials.password,
   };
 };
 
 export const toResetPasswordRequestDTO = (
-  credentials: any
+  credentials: any,
 ): ResetPasswordRequestDTO => {
   return {
     name: credentials.name,
