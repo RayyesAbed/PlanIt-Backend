@@ -1,11 +1,7 @@
-import { randomUUID } from "crypto";
 import { Request, Response } from "express";
 import User from "../../../schemas/User";
-import { validationResult } from "express-validator";
 import { toLoginDTO } from "../authDTOMappers";
 import * as argon2 from "argon2";
-import jwt from "jsonwebtoken";
-import loadSecrets from "../../../configs/loadSecrets";
 import enLoginStatus from "../types/enLoginStatus";
 import validateInputs from "../utils/validateInputs";
 import signJWT from "../services/common/signJWT";
@@ -14,14 +10,11 @@ export const loginUserEmailHandler = async (
   req: Request,
   res: Response,
 ): Promise<any> => {
-  const { JWT_SECRET } = loadSecrets();
   try {
     validateInputs(req);
 
     const email = req.body.email;
     const password = req.body.password;
-
-    // Find user either by email attribute in MongoDB, and only return the object with lean()
 
     const existingUser = await User.findOne({
       confirmedEmail: email,
