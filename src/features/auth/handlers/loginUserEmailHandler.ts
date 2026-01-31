@@ -5,6 +5,7 @@ import * as argon2 from "argon2";
 import enLoginStatus from "../types/enLoginStatus";
 import validateInputs from "../utils/validateInputs";
 import signJWT from "../services/common/signJWT";
+import setRedisKey from "../services/common/setRedisKey";
 
 export const loginUserEmailHandler = async (
   req: Request,
@@ -32,6 +33,8 @@ export const loginUserEmailHandler = async (
           httpOnly: true,
           sameSite: "strict",
         });
+
+        await setRedisKey(loginToken.jti, "false");
 
         return res.status(200).json({ code: enLoginStatus.LOGIN_SUCCESSFUL });
       }
