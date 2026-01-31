@@ -12,4 +12,8 @@ const getCookie = (req: Request, name: string) => {
       return decodeURIComponent(valueParts.join("="));
     }
   }
+
+  return null;
 };
+
+export default getCookie;
