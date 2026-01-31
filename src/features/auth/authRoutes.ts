@@ -15,6 +15,7 @@ import { loginUserEmailHandler } from "./handlers/loginUserEmailHandler";
 import { verifyUserEmailHandler } from "./handlers/verifyUserEmailHandler";
 import { resetPasswordRequestHandler } from "./handlers/resetPasswordRequestHandler";
 import { resetPasswordHandler } from "./handlers/resetPasswordHandler";
+import { logoutUserHandler } from "./handlers/logoutUserHandler";
 
 const authRoutes = Router();
 
@@ -23,7 +24,7 @@ authRoutes.post(
   registerRateLimiter,
   registerRequestValidator,
   rejectNestedObjects,
-  registerUserRequestHandler
+  registerUserRequestHandler,
 );
 
 authRoutes.post("/verify-email", verifyUserEmailHandler);
@@ -33,19 +34,21 @@ authRoutes.post(
   loginRateLimiter,
   loginValidator,
   rejectNestedObjects,
-  loginUserEmailHandler
+  loginUserEmailHandler,
 );
 
 authRoutes.post(
   "/reset-password-request",
   resetPasswordRequestLimiter,
-  resetPasswordRequestHandler
+  resetPasswordRequestHandler,
 );
 
 authRoutes.patch(
   "/reset-password",
   resetPasswordValidator,
-  resetPasswordHandler
+  resetPasswordHandler,
 );
+
+authRoutes.post("/logout", logoutUserHandler);
 
 export default authRoutes;
