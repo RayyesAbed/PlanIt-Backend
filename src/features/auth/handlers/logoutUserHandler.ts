@@ -14,6 +14,8 @@ export const logoutUserHandler = async (
     const payload = verifyJWT(token);
 
     await getAndRevokeRedisKey(payload.jti as string);
+
+    res.clearCookie("login");
   } catch (error) {
     console.error("Error while logging out the user in the handler:", error);
     handleControllerError(error, res);
