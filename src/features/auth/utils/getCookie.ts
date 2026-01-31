@@ -7,5 +7,9 @@ const getCookie = (req: Request, name: string) => {
   const cookies = cookieHeader.split(";");
 
   for (const cookie of cookies) {
+    const [key, ...valueParts] = cookie.trim().split("=");
+    if (key === name) {
+      return decodeURIComponent(valueParts.join("="));
+    }
   }
 };
