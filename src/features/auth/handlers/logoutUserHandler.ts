@@ -10,7 +10,9 @@ export const logoutUserHandler = async (
   res: Response,
 ): Promise<any> => {
   try {
-    const token = getCookie(req, "login")!;
+    const token = getCookie(req, "login");
+
+    if (!token) return res.status(200).json({ code: enLogoutStatus.SUCCESS });
 
     const payload = verifyJWT(token);
 
