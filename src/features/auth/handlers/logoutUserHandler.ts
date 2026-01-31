@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import getCookie from "../utils/getCookie";
 import verifyJWT from "../services/common/verifyJWT";
 import getAndRevokeRedisKey from "../services/common/getAndRevokeRedisKey";
+import handleControllerError from "../utils/handleControllerError";
 
 export const logoutUserHandler = async (
   req: Request,
@@ -13,5 +14,8 @@ export const logoutUserHandler = async (
     const payload = verifyJWT(token);
 
     await getAndRevokeRedisKey(payload.jti as string);
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error while logging out the user in the handler:", error);
+    handleControllerError(error, res);
+  }
 };
