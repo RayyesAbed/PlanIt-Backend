@@ -7,7 +7,7 @@ export const registerRequestValidator = [
     .trim()
     .notEmpty()
     .withMessage("Name is required")
-    .matches(/^\p{L}+$/u)
+    .matches(/^[\p{L}]+(?: [\p{L}]+)*$/u)
     .withMessage("Name must be alphanumeric")
     .custom(rejectDangerousCharacters),
 
