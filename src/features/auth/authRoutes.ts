@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { registerUserRequestHandler } from "./handlers/registerUserHandler";
 import {
   loginValidator,
   registerRequestValidator,
@@ -16,6 +15,7 @@ import { verifyUserEmailHandler } from "./handlers/verifyUserEmailHandler";
 import { resetPasswordRequestHandler } from "./handlers/resetPasswordRequestHandler";
 import { resetPasswordHandler } from "./handlers/resetPasswordHandler";
 import { logoutUserHandler } from "./handlers/logoutUserHandler";
+import registerController from "./register/registerController";
 
 const authRoutes = Router();
 
@@ -24,7 +24,7 @@ authRoutes.post(
   registerRateLimiter,
   registerRequestValidator,
   rejectNestedObjects,
-  registerUserRequestHandler,
+  registerController,
 );
 
 authRoutes.post("/verify-email", verifyUserEmailHandler);
