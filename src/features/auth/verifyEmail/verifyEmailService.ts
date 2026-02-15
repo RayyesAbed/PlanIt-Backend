@@ -8,6 +8,8 @@ const verifyEmailService = async (token: string) => {
   await getAndRevokeRedisKey(payload.jti ?? "");
 
   const user = await User.findById(payload.userId);
+
+  if (!user) throw new Error("USER_NOT_FOUND");
 };
 
 export default verifyEmailService;
