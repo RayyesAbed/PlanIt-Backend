@@ -1,7 +1,7 @@
 import { RegisterRequestDTO } from "../authDTOs";
 import checkSupportedLanguage from "../utils/checkSupportedLanguage";
 import User from "../../../schemas/User";
-import createNewUser from "../services/register/createNewUser";
+import createNewUser from "./createNewUser";
 import signJWT from "../services/common/signJWT";
 import setRedisKey from "../services/common/setRedisKey";
 import sendLinkWithEmail from "../utils/sendLinkWithEmail";
