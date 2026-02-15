@@ -11,11 +11,11 @@ import {
 } from "./authLimiter";
 import rejectNestedObjects from "../../middlewares/rejectNestedObjects";
 import { loginUserEmailHandler } from "./handlers/loginUserEmailHandler";
-import { verifyUserEmailHandler } from "./handlers/verifyUserEmailHandler";
 import { resetPasswordRequestHandler } from "./handlers/resetPasswordRequestHandler";
 import { resetPasswordHandler } from "./handlers/resetPasswordHandler";
 import { logoutUserHandler } from "./handlers/logoutUserHandler";
 import registerController from "./register/registerController";
+import verifyEmailController from "./verifyEmail/verifyEmailController";
 
 const authRoutes = Router();
 
@@ -27,7 +27,7 @@ authRoutes.post(
   registerController,
 );
 
-authRoutes.post("/verify-email", verifyUserEmailHandler);
+authRoutes.post("/verify-email", verifyEmailController);
 
 authRoutes.post(
   "/login",
