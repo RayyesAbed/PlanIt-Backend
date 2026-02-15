@@ -10,9 +10,16 @@ const registerController = async (
 ) => {
   try {
     const registerCredentialsDTO = toRegisterDTO(req.body);
+
     const deviceIPv6 = req.ip;
+
     if (!deviceIPv6) throw new Error("Device IP not found");
+
     await registerService(registerCredentialsDTO, deviceIPv6);
+
+    return res.status(201).json({
+      code: "ACCOUNT_CREATED_AWAITING_VERIFICATION",
+    });
   } catch (error) {
     console.error("Error registering user in controller:", error);
     return handleControllerError(error, res);
