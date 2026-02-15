@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import handleControllerError from "../utils/handleControllerError";
+import verifyEmailService from "./verifyEmailService";
 
 const verifyEmailController = (
   req: Request,
@@ -8,6 +9,7 @@ const verifyEmailController = (
 ) => {
   try {
     const token = req.query.token as string;
+    verifyEmailService(token);
   } catch (error) {
     return handleControllerError(error, res);
   }
