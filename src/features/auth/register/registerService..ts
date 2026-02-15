@@ -4,6 +4,7 @@ import User from "../../../schemas/User";
 import createNewUser from "../services/register/createNewUser";
 import signJWT from "../services/common/signJWT";
 import setRedisKey from "../services/common/setRedisKey";
+import sendLinkWithEmail from "../utils/sendLinkWithEmail";
 
 const registerService = async (
   registerCredentialsDTO: RegisterRequestDTO,
@@ -26,6 +27,14 @@ const registerService = async (
     );
 
     setRedisKey(jti, "false");
+
+    await sendLinkWithEmail(
+      newUser.name,
+      newUser.toBeConfirmedEmail!,
+      newUser.preferredLanguage,
+      "emailVerify",
+      token,
+    );
   }
 };
 
