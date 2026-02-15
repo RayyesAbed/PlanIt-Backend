@@ -9,6 +9,8 @@ const registerController = (
 ) => {
   try {
     const registerCredentialsDTO = toRegisterDTO(req.body);
+    const deviceIPv6 = req.ip;
+    if (!deviceIPv6) throw new Error("Device IP not found");
   } catch (error) {
     console.error("Error registering user in controller:", error);
     return handleControllerError(error, res);
