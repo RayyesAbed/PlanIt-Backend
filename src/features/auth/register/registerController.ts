@@ -2,13 +2,16 @@ import { NextFunction, Request, Response } from "express";
 import { toRegisterDTO } from "../authDTOMappers";
 import handleControllerError from "../utils/handleControllerError";
 import registerService from "./registerService.";
+import validateInputs from "../utils/validateInputs";
 
 const registerController = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<any> => {
   try {
+    validateInputs(req);
+
     const registerCredentialsDTO = toRegisterDTO(req.body);
 
     const deviceIPv6 = req.ip;
