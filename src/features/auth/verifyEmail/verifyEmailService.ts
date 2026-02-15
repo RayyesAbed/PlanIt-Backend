@@ -10,6 +10,11 @@ const verifyEmailService = async (token: string) => {
   const user = await User.findById(payload.userId);
 
   if (!user) throw new Error("USER_NOT_FOUND");
+
+  await user?.updateOne({
+    confirmedEmail: user.toBeConfirmedEmail,
+    toBeConfirmedEmail: "",
+  });
 };
 
 export default verifyEmailService;
