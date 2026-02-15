@@ -2,6 +2,7 @@ import { RegisterRequestDTO } from "../authDTOs";
 import checkSupportedLanguage from "../utils/checkSupportedLanguage";
 import User from "../../../schemas/User";
 import createNewUser from "../services/register/createNewUser";
+import signJWT from "../services/common/signJWT";
 
 const registerService = async (
   registerCredentialsDTO: RegisterRequestDTO,
@@ -16,6 +17,11 @@ const registerService = async (
   });
   if (!existingUser) {
     const newUser = await createNewUser(registerCredentialsDTO, deviceIPv6);
+    const { token, jti } = signJWT(
+      registerCredentialsDTO,
+      "register_user",
+      newUser._id,
+    );
   }
 };
 
