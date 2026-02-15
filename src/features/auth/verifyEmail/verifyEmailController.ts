@@ -7,6 +7,7 @@ const verifyEmailController = (
   next: NextFunction,
 ) => {
   try {
+    const token = req.query.token as string;
   } catch (error) {
     return handleControllerError(error, res);
   }
