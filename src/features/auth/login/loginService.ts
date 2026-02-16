@@ -23,6 +23,8 @@ const loginService = async (loginCredentialsDTO: LoginDTO) => {
       );
 
       await setRedisKey(loginToken.jti, "false");
+
+      return loginToken;
     }
   }
 };
