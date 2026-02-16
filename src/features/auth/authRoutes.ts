@@ -10,12 +10,12 @@ import {
   resetPasswordRequestLimiter,
 } from "./authLimiter";
 import rejectNestedObjects from "../../middlewares/rejectNestedObjects";
-import { loginUserEmailHandler } from "./handlers/loginUserEmailHandler";
 import { resetPasswordRequestHandler } from "./handlers/resetPasswordRequestHandler";
 import { resetPasswordHandler } from "./handlers/resetPasswordHandler";
 import { logoutUserHandler } from "./handlers/logoutUserHandler";
 import registerController from "./register/registerController";
 import verifyEmailController from "./verifyEmail/verifyEmailController";
+import loginController from "./login/loginController";
 
 const authRoutes = Router();
 
@@ -34,7 +34,7 @@ authRoutes.post(
   loginRateLimiter,
   loginValidator,
   rejectNestedObjects,
-  loginUserEmailHandler,
+  loginController,
 );
 
 authRoutes.post(
