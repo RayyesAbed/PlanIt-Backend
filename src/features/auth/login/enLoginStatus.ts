@@ -1,6 +1,6 @@
 enum enLoginStatus {
   LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL",
-  INCORRECT_EMAIL_PASSWORD = "INCORRECT_EMAIL_PASSWORD",
+  AUTH_FAILED = "AUTH_FAILED",
 }
 
-export default enLoginStatus
+export default enLoginStatus;
