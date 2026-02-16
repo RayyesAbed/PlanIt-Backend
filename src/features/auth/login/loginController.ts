@@ -17,7 +17,8 @@ const loginController = async (
 
     const loginToken = await loginService(loginDTO);
 
-    if (!loginToken) return res.status(401).json({ code: "TOKEN_MISSING" });
+    if (!loginToken)
+      return res.status(401).json({ code: enLoginStatus.AUTH_FAILED });
 
     res.cookie("login", loginToken.token, {
       httpOnly: true,
