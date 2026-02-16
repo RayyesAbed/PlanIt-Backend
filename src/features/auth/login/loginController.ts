@@ -17,6 +17,11 @@ const loginController = async (
     const loginToken = await loginService(loginDTO);
 
     if (!loginToken) return res.status(401).json({ code: "TOKEN_MISSING" });
+
+    res.cookie("login", loginToken.token, {
+      httpOnly: true,
+      sameSite: "strict",
+    });
   } catch (error) {
     console.error("Error logging user in controller:", error);
     return handleControllerError(error, res);
