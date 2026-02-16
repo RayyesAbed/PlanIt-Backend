@@ -1,3 +1,3 @@
-const logoutService = () => {};
+const logoutService = async (token: string) => {};
 
 export default logoutService;
