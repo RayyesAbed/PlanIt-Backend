@@ -1,0 +1,32 @@
+import { NextFunction, Request, Response } from "express";
+import { toRegisterDTO } from "../authDTOMappers";
+import handleControllerError from "../utils/handleControllerError";
+import registerService from "./registerService.";
+import validateInputs from "../utils/validateInputs";
+
+const registerController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<any> => {
+  try {
+    validateInputs(req);
+
+    const registerCredentialsDTO = toRegisterDTO(req.body);
+
+    const deviceIPv6 = req.ip;
+
+    if (!deviceIPv6) throw new Error("Device IP not found");
+
+    await registerService(registerCredentialsDTO, deviceIPv6);
+
+    return res.status(201).json({
+      code: "ACCOUNT_CREATED_AWAITING_VERIFICATION",
+    });
+  } catch (error) {
+    console.error("Error registering user in controller:", error);
+    return handleControllerError(error, res);
+  }
+};
+
+export default registerController;

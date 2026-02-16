@@ -1,8 +1,8 @@
 import * as argon2 from "argon2";
-import { RegisterRequestDTO } from "../../authDTOs";
-import Subscription from "../../../../schemas/Subscription";
-import { getCurrencyFromIP } from "../../../../utils/currency";
-import User from "../../../../schemas/User";
+import { RegisterRequestDTO } from "../authDTOs";
+import Subscription from "../../../schemas/Subscription";
+import { getCurrencyFromIP } from "../../../utils/currency";
+import User from "../../../schemas/User";
 
 const createNewUser = async (
   registerCredentialsDTO: RegisterRequestDTO,
