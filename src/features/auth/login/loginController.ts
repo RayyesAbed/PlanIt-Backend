@@ -3,7 +3,7 @@ import handleControllerError from "../utils/handleControllerError";
 import validateInputs from "../utils/validateInputs";
 import { toLoginDTO } from "../authDTOMappers";
 import loginService from "./loginService";
-import enLoginStatus from "../types/enLoginStatus";
+import enLoginStatus from "./enLoginStatus";
 
 const loginController = async (
   req: Request,
