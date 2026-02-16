@@ -15,6 +15,8 @@ const loginController = async (
     const loginDTO = toLoginDTO(req.body);
 
     const loginToken = await loginService(loginDTO);
+
+    if (!loginToken) return res.status(401).json({ code: "TOKEN_MISSING" });
   } catch (error) {
     console.error("Error logging user in controller:", error);
     return handleControllerError(error, res);
