@@ -15,6 +15,8 @@ const logoutController = async (
     if (!token) return res.status(200).json({ code: enLogoutStatus.SUCCESS });
 
     await logoutService(token);
+
+    res.clearCookie("login");
   } catch (error) {
     console.error("Error  logging out users in controller:", error);
     handleControllerError(error, res);
