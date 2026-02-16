@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import handleControllerError from "../utils/handleControllerError";
 import getCookie from "../utils/getCookie";
-import enLogoutStatus from "../types/enLogoutStatus";
+import enLogoutStatus from "./enLogoutStatus";
 import logoutService from "./logoutService";
 
 const logoutController = async (
