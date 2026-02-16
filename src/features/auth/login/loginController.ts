@@ -3,6 +3,7 @@ import handleControllerError from "../utils/handleControllerError";
 import validateInputs from "../utils/validateInputs";
 import { toLoginDTO } from "../authDTOMappers";
 import loginService from "./loginService";
+import enLoginStatus from "../types/enLoginStatus";
 
 const loginController = async (
   req: Request,
@@ -22,6 +23,8 @@ const loginController = async (
       httpOnly: true,
       sameSite: "strict",
     });
+
+    return res.status(200).json({ code: enLoginStatus.LOGIN_SUCCESSFUL });
   } catch (error) {
     console.error("Error logging user in controller:", error);
     return handleControllerError(error, res);
