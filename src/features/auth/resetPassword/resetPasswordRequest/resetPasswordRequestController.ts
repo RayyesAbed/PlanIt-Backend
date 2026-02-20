@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import handleControllerError from "../../utils/handleControllerError";
+import resetPasswordRequestService from "./resetPasswordRequestService";
 
 const resetPasswordRequestController = async (
   req: Request,
@@ -8,6 +9,8 @@ const resetPasswordRequestController = async (
 ): Promise<any> => {
   try {
     const confirmedEmail: string = req.body.email;
+
+    await resetPasswordRequestService(confirmedEmail);
   } catch (error) {
     console.error("Error resetting user password in controller: ", error);
     return handleControllerError(error, res);
