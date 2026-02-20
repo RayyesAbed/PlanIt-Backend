@@ -9,6 +9,8 @@ const resetPasswordActionController = async (
 ): Promise<any> => {
   try {
     validateInputs(req);
+
+    const token = req.query.token as string;
   } catch (error) {
     return handleControllerError(error, res);
   }
