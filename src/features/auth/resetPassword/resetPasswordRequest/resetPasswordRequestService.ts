@@ -1,6 +1,7 @@
 import User from "../../../../schemas/User";
 import { toResetPasswordRequestDTO } from "../../authDTOMappers";
 import signJWT from "../../services/common/signJWT";
+import setRedisKey from "../../services/common/setRedisKey";
 
 const resetPasswordRequestService = async (confirmedEmail: string) => {
   const user = await User.findOne({ confirmedEmail: confirmedEmail });
@@ -13,6 +14,8 @@ const resetPasswordRequestService = async (confirmedEmail: string) => {
       "reset_password",
       user._id,
     );
+
+    setRedisKey(jti, "false");
   }
 };
 
