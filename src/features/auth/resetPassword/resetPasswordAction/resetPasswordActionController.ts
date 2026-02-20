@@ -11,6 +11,7 @@ const resetPasswordActionController = async (
     validateInputs(req);
 
     const token = req.query.token as string;
+    const newPassword = req.body.newPassword;
   } catch (error) {
     return handleControllerError(error, res);
   }
