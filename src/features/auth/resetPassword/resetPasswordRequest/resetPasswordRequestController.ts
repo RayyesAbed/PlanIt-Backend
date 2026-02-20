@@ -7,6 +7,7 @@ const resetPasswordRequestController = async (
   next: NextFunction,
 ): Promise<any> => {
   try {
+    const confirmedEmail: string = req.body.email;
   } catch (error) {
     console.error("Error resetting user password in controller: ", error);
     return handleControllerError(error, res);
