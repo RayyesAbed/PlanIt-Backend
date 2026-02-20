@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import handleControllerError from "../../utils/handleControllerError";
 import validateInputs from "../../utils/validateInputs";
 import resetPasswordActionService from "./resetPasswordActionService";
+import enPasswordResetCode from "./enPasswordResetCode";
 
 const resetPasswordActionController = async (
   req: Request,
@@ -16,7 +17,7 @@ const resetPasswordActionController = async (
 
     await resetPasswordActionService(token, newPassword);
 
-    return res.status(200).json({ code: "PASSWORD_RESET_SUCCESSUL" });
+    return res.status(200).json({ code: enPasswordResetCode.SUCCESS });
   } catch (error) {
     return handleControllerError(error, res);
   }
