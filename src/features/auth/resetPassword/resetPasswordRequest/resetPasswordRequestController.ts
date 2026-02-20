@@ -11,6 +11,8 @@ const resetPasswordRequestController = async (
     const confirmedEmail: string = req.body.email;
 
     await resetPasswordRequestService(confirmedEmail);
+
+    return res.status(200).json({ code: "SUCCESS" });
   } catch (error) {
     console.error("Error resetting user password in controller: ", error);
     return handleControllerError(error, res);
