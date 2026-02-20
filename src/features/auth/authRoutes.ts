@@ -10,12 +10,12 @@ import {
   resetPasswordRequestLimiter,
 } from "./authLimiter";
 import rejectNestedObjects from "../../middlewares/rejectNestedObjects";
-import { resetPasswordHandler } from "./handlers/resetPasswordHandler";
 import registerController from "./register/registerController";
 import verifyEmailController from "./verifyEmail/verifyEmailController";
 import loginController from "./login/loginController";
 import logoutController from "./logout/logoutController";
 import resetPasswordRequestController from "./resetPassword/resetPasswordRequest/resetPasswordRequestController";
+import resetPasswordActionController from "./resetPassword/resetPasswordAction/resetPasswordActionController";
 
 const authRoutes = Router();
 
@@ -46,7 +46,7 @@ authRoutes.post(
 authRoutes.patch(
   "/reset-password",
   resetPasswordValidator,
-  resetPasswordHandler,
+  resetPasswordActionController,
 );
 
 authRoutes.post("/logout", logoutController);
