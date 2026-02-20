@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import handleControllerError from "../../utils/handleControllerError";
 import validateInputs from "../../utils/validateInputs";
+import resetPasswordActionService from "./resetPasswordActionService";
 
 const resetPasswordActionController = async (
   req: Request,
@@ -12,6 +13,8 @@ const resetPasswordActionController = async (
 
     const token = req.query.token as string;
     const newPassword = req.body.newPassword;
+
+    resetPasswordActionService(token, newPassword);
   } catch (error) {
     return handleControllerError(error, res);
   }
