@@ -14,7 +14,9 @@ const resetPasswordActionController = async (
     const token = req.query.token as string;
     const newPassword = req.body.newPassword;
 
-    resetPasswordActionService(token, newPassword);
+    await resetPasswordActionService(token, newPassword);
+
+    return res.status(200).json({ code: "PASSWORD_RESET_SUCCESSUL" });
   } catch (error) {
     return handleControllerError(error, res);
   }
