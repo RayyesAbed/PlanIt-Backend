@@ -18,25 +18,23 @@ const registerService = async (
     ],
   }).lean();
 
-  if (!existingUser) {
-    const newUser = await createNewUser(registerCredentialsDTO, deviceIPv6);
+  const newUser = await createNewUser(registerCredentialsDTO, deviceIPv6);
 
-    const { token, jti } = signJWT(
-      registerCredentialsDTO,
-      "register_user",
-      newUser._id,
-    );
+  const { token, jti } = signJWT(
+    registerCredentialsDTO,
+    "register_user",
+    newUser._id,
+  );
 
-    setRedisKey(jti, "false");
+  setRedisKey(jti, "false");
 
-    await sendLinkWithEmail(
-      newUser.name,
-      newUser.toBeConfirmedEmail!,
-      newUser.preferredLanguage,
-      "emailVerify",
-      token,
-    );
-  }
+  await sendLinkWithEmail(
+    newUser.name,
+    newUser.toBeConfirmedEmail!,
+    newUser.preferredLanguage,
+    "emailVerify",
+    token,
+  );
 };
 
 export default registerService;
