@@ -16,7 +16,8 @@ const registerService = async (
       { confirmedEmail: registerCredentialsDTO.toBeConfirmedEmail },
       { toBeConfirmedEmail: registerCredentialsDTO.toBeConfirmedEmail },
     ],
-  });
+  }).lean();
+
   if (!existingUser) {
     const newUser = await createNewUser(registerCredentialsDTO, deviceIPv6);
 
