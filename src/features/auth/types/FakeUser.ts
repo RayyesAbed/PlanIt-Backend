@@ -1,7 +1,9 @@
+import { Types } from "mongoose";
+
 type FakeUser = {
-  _id: string;
+  _id: Types.ObjectId;
   name: string;
-  toBeConfirmedEmail?: string;
+  toBeConfirmedEmail?: string | null;
   preferredLanguage: string;
 };
 
