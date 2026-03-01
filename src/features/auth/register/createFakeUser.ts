@@ -1,3 +1,5 @@
+import FakeUser from "../types/FakeUser";
+
 const createFakeUser = (existingUser: FakeUser) => {
   return {
     _id: existingUser._id,
