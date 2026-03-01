@@ -4,3 +4,5 @@ type FakeUser = {
   toBeConfirmedEmail?: string;
   preferredLanguage: string;
 };
+
+export default FakeUser;
