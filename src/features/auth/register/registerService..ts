@@ -5,6 +5,10 @@ import createNewUser from "./createNewUser";
 import signJWT from "../services/common/signJWT";
 import setRedisKey from "../services/common/setRedisKey";
 import sendLinkWithEmail from "../utils/sendLinkWithEmail";
+import createFakeUser from "./createFakeUser";
+import loadSecrets from "../../../configs/loadSecrets";
+
+const { FAKE_USER_EMAIL } = loadSecrets();
 
 const registerService = async (
   registerCredentialsDTO: RegisterRequestDTO,
@@ -18,7 +22,11 @@ const registerService = async (
     ],
   }).lean();
 
-  const newUser = await createNewUser(registerCredentialsDTO, deviceIPv6);
+  const isUserNew = !existingUser;
+
+  const newUser = isUserNew
+    ? await createNewUser(registerCredentialsDTO, deviceIPv6)
+    : createFakeUser(existingUser);
 
   const { token, jti } = signJWT(
     registerCredentialsDTO,
@@ -30,7 +38,7 @@ const registerService = async (
 
   await sendLinkWithEmail(
     newUser.name,
-    newUser.toBeConfirmedEmail!,
+    isUserNew ? newUser.toBeConfirmedEmail! : FAKE_USER_EMAIL,
     newUser.preferredLanguage,
     "emailVerify",
     token,
