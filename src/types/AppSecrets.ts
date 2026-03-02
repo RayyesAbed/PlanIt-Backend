@@ -5,6 +5,7 @@ type AppSecrets = {
   AWS_REGION: string;
   GMAIL_USER: string;
   GMAIL_PASSWORD: string;
+  FAKE_USER_EMAIL: string;
   JWT_SECRET: string;
   REDIS_HOST: string;
   REDIS_USERNAME: string;
