@@ -18,6 +18,7 @@ const loadSecrets = (): AppSecrets => {
     AWS_REGION: assertEnv("AWS_REGION"),
     GMAIL_USER: assertEnv("GMAIL_USER"),
     GMAIL_PASSWORD: assertEnv("GMAIL_PASSWORD"),
+    FAKE_USER_EMAIL: assertEnv("FAKE_USER_EMAIL"),
     JWT_SECRET: assertEnv("JWT_SECRET"),
     REDIS_HOST: assertEnv("REDIS_HOST"),
     REDIS_USERNAME: assertEnv("REDIS_USERNAME"),
@@ -25,9 +26,9 @@ const loadSecrets = (): AppSecrets => {
     REDIS_PORT: Number(process.env.REDIS_PORT),
     REDIS_DB: Number(process.env.REDIS_DB),
     REDIS_MAX_RETRIES_PER_REQUEST: Number(
-      process.env.REDIS_MAX_RETRIES_PER_REQUEST
+      process.env.REDIS_MAX_RETRIES_PER_REQUEST,
     ),
-    SENTRY_DSN: assertEnv("SENTRY_DSN")
+    SENTRY_DSN: assertEnv("SENTRY_DSN"),
   };
 };
 
