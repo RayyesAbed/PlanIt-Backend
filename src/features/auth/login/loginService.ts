@@ -20,9 +20,10 @@ const loginService = async (loginCredentialsDTO: LoginDTO) => {
         loginCredentialsDTO,
         "login",
         existingUser._id,
+        3600,
       );
 
-      await setRedisKey(loginToken.jti, "false");
+      await setRedisKey(loginToken.jti, "false", 3600);
 
       return loginToken;
     }
