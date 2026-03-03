@@ -16,9 +16,10 @@ const resetPasswordRequestService = async (confirmedEmail: string) => {
     resetPasswordCredentials,
     "reset_password",
     existingUser._id,
+    900,
   );
 
-  setRedisKey(jti, "false");
+  setRedisKey(jti, "false", 900);
 
   await sendLinkWithEmail(
     existingUser.name,
