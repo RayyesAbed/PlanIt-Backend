@@ -12,6 +12,7 @@ const signJWT = (
   credentialsDTO: RegisterRequestDTO | ResetPasswordRequestDTO | LoginDTO,
   jwtSignPurpose: string,
   userId: Types.ObjectId,
+  ttlInSeconds: number,
 ) => {
   try {
     const jti = randomUUID();
@@ -25,7 +26,7 @@ const signJWT = (
       },
       JWT_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: ttlInSeconds * 1000,
         jwtid: jti,
       },
     );
