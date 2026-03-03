@@ -32,9 +32,10 @@ const registerService = async (
     registerCredentialsDTO,
     "register_user",
     newUser._id,
+    3600,
   );
 
-  setRedisKey(jti, "false");
+  setRedisKey(jti, "false", 3600);
 
   await sendLinkWithEmail(
     newUser.name,
