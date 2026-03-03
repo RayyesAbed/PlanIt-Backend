@@ -1,7 +1,6 @@
 import { redis } from "../../../../configs/redis";
 import HttpError from "../../../../errors/HttpError";
 import emailVerificationCodes from "../../types/emailVerificationCodes";
-import setRedisKey from "./setRedisKey";
 
 export class TokenAlreadyUsedError extends HttpError {
   constructor() {
@@ -19,7 +18,7 @@ const getAndRevokeRedisKey = async (jti: string): Promise<void> => {
   const value = await redis.get(`jti=${jti}`);
 
   if (value === "false") {
-    await setRedisKey(jti, "true");
+    await redis.set(`jti=${jti}`, "true", "KEEPTTL");
     return;
   }
 
