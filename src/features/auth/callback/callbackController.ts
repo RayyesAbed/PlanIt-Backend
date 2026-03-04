@@ -11,9 +11,13 @@ const callbackController = async (
     const providerType = req.params.providerType;
     const code = req.query.code as string;
 
+    const deviceIPv6 = req.ip;
+
+    if (!deviceIPv6) throw new Error("Device IP not found");
+
     if (!code) return res.status(400).send("No code provided");
 
-    callbackService(code, providerType);
+    callbackService(code, providerType, deviceIPv6);
   } catch (error) {
     console.error("Error in OAuth provider:", error);
     return handleControllerError(error, res);
