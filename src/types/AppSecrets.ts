@@ -1,4 +1,5 @@
 type AppSecrets = {
+  FRONTEND_URL: string;
   MONGODB_URI: string;
   GEMINI_API_KEY: string;
   AWS_S3_BUCKET: string;
