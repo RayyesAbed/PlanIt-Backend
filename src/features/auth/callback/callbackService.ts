@@ -60,6 +60,17 @@ const callbackService = async (
     if (!freePlan) throw new Error("Free subscription plan not found");
 
     const currencySymbol = getCurrencyFromIP(deviceIPv6);
+
+    await User.create({
+      name: user.name,
+      provider: "google",
+      providerId: user.sub,
+      picture: user.picture,
+      confirmedEmail: user.email,
+      preferredLanguage: "en",
+      currency: currencySymbol,
+      subscription: freePlan._id,
+    });
   }
 };
 
