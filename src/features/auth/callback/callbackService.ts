@@ -1,4 +1,5 @@
 import loadSecrets from "../../../configs/loadSecrets";
+import Subscription from "../../../schemas/Subscription";
 import User from "../../../schemas/User";
 import enProviderType from "../provider/enProviderType";
 import GoogleUserProfile from "./types/GoogleUserProfile";
@@ -51,6 +52,12 @@ const callbackService = async (
   const user: GoogleUserProfile = await userResponse.json();
 
   const doesUserExist = await User.findOne({ confirmedEmail: user.email });
+
+  if (!doesUserExist) {
+    const freePlan = await Subscription.findOne({ name: "Free" });
+
+    if (!freePlan) throw new Error("Free subscription plan not found");
+  }
 };
 
 export default callbackService;
