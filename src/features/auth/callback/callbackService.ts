@@ -4,6 +4,7 @@ import Subscription from "../../../schemas/Subscription";
 import User from "../../../schemas/User";
 import { getCurrencyFromIP } from "../../../utils/currency";
 import enProviderType from "../provider/enProviderType";
+import setRedisKey from "../services/common/setRedisKey";
 import signJWT from "../services/common/signJWT";
 import GoogleUserProfile from "./types/GoogleUserProfile";
 
@@ -75,6 +76,8 @@ const callbackService = async (
     })) as IUser;
 
     const { token, jti } = signJWT(newUser, "login", newUser._id, 3600);
+
+    setRedisKey(jti, "false", 3600);
   }
 };
 
