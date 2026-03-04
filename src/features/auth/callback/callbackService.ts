@@ -78,6 +78,8 @@ const callbackService = async (
     const { token, jti } = signJWT(newUser, "login", newUser._id, 3600);
 
     setRedisKey(jti, "false", 3600);
+
+    return token;
   }
 };
 
