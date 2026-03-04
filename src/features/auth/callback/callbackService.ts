@@ -1,8 +1,10 @@
 import loadSecrets from "../../../configs/loadSecrets";
+import IUser from "../../../interfaces/IUser";
 import Subscription from "../../../schemas/Subscription";
 import User from "../../../schemas/User";
 import { getCurrencyFromIP } from "../../../utils/currency";
 import enProviderType from "../provider/enProviderType";
+import signJWT from "../services/common/signJWT";
 import GoogleUserProfile from "./types/GoogleUserProfile";
 
 const {
@@ -61,7 +63,7 @@ const callbackService = async (
 
     const currencySymbol = getCurrencyFromIP(deviceIPv6);
 
-    await User.create({
+    const newUser = (await User.create({
       name: user.name,
       provider: "google",
       providerId: user.sub,
@@ -70,7 +72,9 @@ const callbackService = async (
       preferredLanguage: "en",
       currency: currencySymbol,
       subscription: freePlan._id,
-    });
+    })) as IUser;
+
+    const { token, jti } = signJWT(newUser, "login", newUser._id, 3600);
   }
 };
 
