@@ -1,6 +1,7 @@
 import loadSecrets from "../../../configs/loadSecrets";
 import Subscription from "../../../schemas/Subscription";
 import User from "../../../schemas/User";
+import { getCurrencyFromIP } from "../../../utils/currency";
 import enProviderType from "../provider/enProviderType";
 import GoogleUserProfile from "./types/GoogleUserProfile";
 
@@ -57,6 +58,8 @@ const callbackService = async (
     const freePlan = await Subscription.findOne({ name: "Free" });
 
     if (!freePlan) throw new Error("Free subscription plan not found");
+
+    const currencySymbol = getCurrencyFromIP(deviceIPv6);
   }
 };
 
