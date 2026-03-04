@@ -17,6 +17,14 @@ const callbackService = (code: string, providerType: string) => {
     OAuthRedirectURI = GOOGLE_OAUTH_REDIRECT_URI;
     OAuthClientSecret = GOOGLE_OAUTH_CLIENT_SECRET;
   }
+
+  const params = new URLSearchParams({
+    code,
+    client_id: OAuthClientID,
+    client_secret: OAuthClientSecret,
+    redirect_uri: OAuthRedirectURI,
+    grant_type: "authorization_code",
+  });
 };
 
 export default callbackService;
