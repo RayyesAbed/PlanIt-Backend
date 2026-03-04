@@ -14,6 +14,8 @@ type AppSecrets = {
   REDIS_DB: number;
   REDIS_MAX_RETRIES_PER_REQUEST: number;
   SENTRY_DSN: string;
+  GOOGLE_OAUTH_CLIENT_ID: string;
+  GOOGLE_OAUTH_REDIRECT_URI: string;
 };
 
 export default AppSecrets;
