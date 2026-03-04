@@ -7,7 +7,7 @@ const {
   GOOGLE_OAUTH_CLIENT_SECRET,
 } = loadSecrets();
 
-const callbackService = (code: string, providerType: string) => {
+const callbackService = async (code: string, providerType: string) => {
   let OAuthClientID = "";
   let OAuthRedirectURI = "";
   let OAuthClientSecret = "";
@@ -24,6 +24,12 @@ const callbackService = (code: string, providerType: string) => {
     client_secret: OAuthClientSecret,
     redirect_uri: OAuthRedirectURI,
     grant_type: "authorization_code",
+  });
+
+  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params.toString(),
   });
 };
 
