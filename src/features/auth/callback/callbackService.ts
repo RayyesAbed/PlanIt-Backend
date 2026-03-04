@@ -1,5 +1,6 @@
 import loadSecrets from "../../../configs/loadSecrets";
 import enProviderType from "../provider/enProviderType";
+import GoogleUserProfile from "./types/GoogleUserProfile";
 
 const {
   GOOGLE_OAUTH_CLIENT_ID,
@@ -46,7 +47,7 @@ const callbackService = async (
     },
   );
 
-  const user = await userResponse.json();
+  const user: GoogleUserProfile = await userResponse.json();
 };
 
 export default callbackService;
