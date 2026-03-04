@@ -14,7 +14,6 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     birthDate: {
       type: String,
@@ -40,6 +39,6 @@ const UserSchema = new mongoose.Schema(
   {
     timestamps: true,
     strict: true,
-  }
+  },
 );
 export default mongoose.model("User", UserSchema);
