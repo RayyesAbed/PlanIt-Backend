@@ -12,6 +12,7 @@ function assertEnv(varName: string): string {
  */
 const loadSecrets = (): AppSecrets => {
   return {
+    FRONTEND_URL: assertEnv("FRONTEND_URL"),
     MONGODB_URI: assertEnv("MONGODB_URI"),
     GEMINI_API_KEY: assertEnv("GEMINI_API_KEY"),
     AWS_S3_BUCKET: assertEnv("AWS_S3_BUCKET"),
