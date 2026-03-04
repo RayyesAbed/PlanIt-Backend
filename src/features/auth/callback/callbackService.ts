@@ -7,7 +7,11 @@ const {
   GOOGLE_OAUTH_CLIENT_SECRET,
 } = loadSecrets();
 
-const callbackService = async (code: string, providerType: string) => {
+const callbackService = async (
+  code: string,
+  providerType: string,
+  deviceIPv6: string,
+) => {
   let OAuthClientID = "";
   let OAuthRedirectURI = "";
   let OAuthClientSecret = "";
