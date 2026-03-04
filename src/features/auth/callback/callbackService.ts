@@ -1,4 +1,5 @@
 import loadSecrets from "../../../configs/loadSecrets";
+import User from "../../../schemas/User";
 import enProviderType from "../provider/enProviderType";
 import GoogleUserProfile from "./types/GoogleUserProfile";
 
@@ -48,6 +49,8 @@ const callbackService = async (
   );
 
   const user: GoogleUserProfile = await userResponse.json();
+
+  const doesUserExist = await User.findOne({ confirmedEmail: user.email });
 };
 
 export default callbackService;
