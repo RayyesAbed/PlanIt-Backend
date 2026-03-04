@@ -6,6 +6,10 @@ const {
   GOOGLE_OAUTH_CLIENT_SECRET,
 } = loadSecrets();
 
-const callbackService = (code: string, providerType: string) => {};
+const callbackService = (code: string, providerType: string) => {
+  let OAuthClientID = "";
+  let OAuthRedirectURI = "";
+  let OAuthClientSecret = "";
+};
 
 export default callbackService;
