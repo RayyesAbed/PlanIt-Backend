@@ -7,6 +7,9 @@ const callbackController = async (
   next: NextFunction,
 ): Promise<any> => {
   try {
+    const code = req.query.code as string;
+
+    if (!code) return res.status(400).send("No code provided");
   } catch (error) {
     console.error("Error in OAuth provider:", error);
     return handleControllerError(error, res);
