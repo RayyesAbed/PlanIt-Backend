@@ -7,6 +7,7 @@ import setRedisKey from "../services/common/setRedisKey";
 import sendLinkWithEmail from "../utils/sendLinkWithEmail";
 import createFakeUser from "./createFakeUser";
 import loadSecrets from "../../../configs/loadSecrets";
+import IUser from "../../../interfaces/IUser";
 
 const { FAKE_USER_EMAIL } = loadSecrets();
 
@@ -24,16 +25,13 @@ const registerService = async (
 
   const isUserNew = !existingUser;
 
-  const newUser = isUserNew
-    ? await createNewUser(registerCredentialsDTO, deviceIPv6)
-    : createFakeUser(existingUser);
+  const newUser = (
+    isUserNew
+      ? await createNewUser(registerCredentialsDTO, deviceIPv6)
+      : createFakeUser(existingUser)
+  ) as IUser;
 
-  const { token, jti } = signJWT(
-    registerCredentialsDTO,
-    "register_user",
-    newUser._id,
-    3600,
-  );
+  const { token, jti } = signJWT(newUser, "register_user", newUser._id, 3600);
 
   setRedisKey(jti, "false", 3600);
 
