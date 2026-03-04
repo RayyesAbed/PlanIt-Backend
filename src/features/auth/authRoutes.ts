@@ -16,6 +16,7 @@ import loginController from "./login/loginController";
 import logoutController from "./logout/logoutController";
 import resetPasswordRequestController from "./resetPassword/resetPasswordRequest/resetPasswordRequestController";
 import resetPasswordActionController from "./resetPassword/resetPasswordAction/resetPasswordActionController";
+import providerController from "./provider/providerController";
 
 const authRoutes = Router();
 
@@ -50,5 +51,7 @@ authRoutes.patch(
 );
 
 authRoutes.post("/logout", logoutController);
+
+authRoutes.get("/provider/:providerType", providerController);
 
 export default authRoutes;
