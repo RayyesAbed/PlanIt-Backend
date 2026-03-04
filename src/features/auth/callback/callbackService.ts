@@ -34,6 +34,15 @@ const callbackService = async (code: string, providerType: string) => {
 
   const tokenData = await tokenResponse.json();
   const accessToken = tokenData.access_token;
+
+  const userResponse = await fetch(
+    "https://www.googleapis.com/oauth2/v3/userinfo",
+    {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    },
+  );
+
+  const user = await userResponse.json();
 };
 
 export default callbackService;
