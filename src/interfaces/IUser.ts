@@ -3,6 +3,7 @@ import { Document, Types } from "mongoose";
 interface IUser extends Document {
   _id: Types.ObjectId;
   name: string;
+  toBeConfirmedEmail: string;
   confirmedEmail: string;
   password?: string;
   provider: "local" | "google" | "apple";
