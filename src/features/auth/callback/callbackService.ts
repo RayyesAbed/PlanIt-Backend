@@ -31,6 +31,9 @@ const callbackService = async (code: string, providerType: string) => {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: params.toString(),
   });
+
+  const tokenData = await tokenResponse.json();
+  const accessToken = tokenData.access_token;
 };
 
 export default callbackService;
