@@ -12,6 +12,9 @@ const UserSchema = new mongoose.Schema(
       default: "local",
       required: true,
     },
+    providerId: {
+      type: String,
+    },
     toBeConfirmedEmail: {
       type: String,
     },
