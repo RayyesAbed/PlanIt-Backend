@@ -6,6 +6,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    provider: {
+      type: String,
+      enum: ["local", "google", "apple"],
+      default: "local",
+      required: true,
+    },
     toBeConfirmedEmail: {
       type: String,
     },
