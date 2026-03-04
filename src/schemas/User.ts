@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema(
     providerId: {
       type: String,
     },
+    picture: {
+      type: String,
+      default: null,
+    },
     toBeConfirmedEmail: {
       type: String,
     },
