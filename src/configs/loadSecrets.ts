@@ -29,6 +29,8 @@ const loadSecrets = (): AppSecrets => {
       process.env.REDIS_MAX_RETRIES_PER_REQUEST,
     ),
     SENTRY_DSN: assertEnv("SENTRY_DSN"),
+    GOOGLE_OAUTH_CLIENT_ID: assertEnv("GOOGLE_OAUTH_CLIENT_ID"),
+    GOOGLE_OAUTH_REDIRECT_URI: assertEnv("GOOGLE_OAUTH_REDIRECT_URI"),
   };
 };
 
