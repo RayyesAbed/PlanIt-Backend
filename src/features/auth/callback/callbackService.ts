@@ -64,7 +64,7 @@ const callbackService = async (
 
     const currencySymbol = getCurrencyFromIP(deviceIPv6);
 
-    const newUser = (await User.create({
+    userInDB = (await User.create({
       name: user.name,
       provider: "google",
       providerId: user.sub,
@@ -75,7 +75,7 @@ const callbackService = async (
       subscription: freePlan._id,
     })) as IUser;
 
-    const { token, jti } = signJWT(newUser, "login", newUser._id, 3600);
+    const { token, jti } = signJWT(userInDB, "login", userInDB._id, 3600);
 
     setRedisKey(jti, "false", 3600);
 
