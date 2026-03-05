@@ -55,7 +55,7 @@ const callbackService = async (
 
   const user: GoogleUserProfile = await userResponse.json();
 
-  let userInDB = await User.findOne({ confirmedEmail: user.email });
+  let userInDB = (await User.findOne({ confirmedEmail: user.email })) as IUser;
 
   if (!userInDB) {
     const freePlan = await Subscription.findOne({ name: "Free" });
