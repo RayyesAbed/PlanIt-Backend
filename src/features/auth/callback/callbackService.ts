@@ -55,9 +55,9 @@ const callbackService = async (
 
   const user: GoogleUserProfile = await userResponse.json();
 
-  const doesUserExist = await User.findOne({ confirmedEmail: user.email });
+  const userInDB = await User.findOne({ confirmedEmail: user.email });
 
-  if (!doesUserExist) {
+  if (!userInDB) {
     const freePlan = await Subscription.findOne({ name: "Free" });
 
     if (!freePlan) throw new Error("Free subscription plan not found");
