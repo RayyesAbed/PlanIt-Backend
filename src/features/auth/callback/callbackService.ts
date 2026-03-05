@@ -74,13 +74,13 @@ const callbackService = async (
       currency: currencySymbol,
       subscription: freePlan._id,
     })) as IUser;
-
-    const { token, jti } = signJWT(userInDB, "login", userInDB._id, 3600);
-
-    setRedisKey(jti, "false", 3600);
-
-    return token;
   }
+
+  const { token, jti } = signJWT(userInDB, "login", userInDB._id, 3600);
+
+  setRedisKey(jti, "false", 3600);
+
+  return token;
 };
 
 export default callbackService;
