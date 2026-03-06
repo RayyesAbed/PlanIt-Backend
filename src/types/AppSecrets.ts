@@ -18,6 +18,7 @@ type AppSecrets = {
   GOOGLE_OAUTH_CLIENT_ID: string;
   GOOGLE_OAUTH_REDIRECT_URI: string;
   GOOGLE_OAUTH_CLIENT_SECRET: string;
+  EXPRESS_SESSION_SECRET: string;
 };
 
 export default AppSecrets;
