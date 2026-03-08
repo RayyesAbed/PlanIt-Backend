@@ -14,11 +14,11 @@ export class TokenNotFoundError extends HttpError {
   }
 }
 
-const getAndRevokeRedisKey = async (jti: string): Promise<void> => {
-  const value = await redis.get(`jti=${jti}`);
+const getAndRevokeRedisKey = async (key: string): Promise<void> => {
+  const value = await redis.get(key);
 
   if (value === "false") {
-    await redis.set(`jti=${jti}`, "true", "KEEPTTL");
+    await redis.set(key, "true", "KEEPTTL");
     return;
   }
 

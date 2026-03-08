@@ -1,12 +1,12 @@
 import { redis } from "../../../../configs/redis";
 
 const setRedisKey = async (
-  jti: string,
+  key: string,
   value: string,
   ttlInSeconds: number,
 ) => {
   try {
-    await redis.set(`jti=${jti}`, value, "EX", ttlInSeconds);
+    await redis.set(key, value, "EX", ttlInSeconds);
   } catch (error) {
     throw error;
   }
