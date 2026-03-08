@@ -21,6 +21,8 @@ const callbackController = async (
 
     if (!code) return res.status(400).send("No code provided");
 
+    if (!state) return res.status(401).send("INVALID_STATE");
+
     const token = await callbackService(code, providerType, deviceIPv6, state);
 
     return res.redirect(`${FRONTEND_URL}/callback?token=${token}`);
