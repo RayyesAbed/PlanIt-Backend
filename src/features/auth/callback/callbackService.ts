@@ -1,4 +1,5 @@
 import loadSecrets from "../../../configs/loadSecrets";
+import { redis } from "../../../configs/redis";
 import IUser from "../../../interfaces/IUser";
 import Subscription from "../../../schemas/Subscription";
 import User from "../../../schemas/User";
@@ -18,6 +19,7 @@ const callbackService = async (
   code: string,
   providerType: string,
   deviceIPv6: string,
+  state: string,
 ) => {
   let OAuthClientID = "";
   let OAuthRedirectURI = "";
@@ -29,12 +31,17 @@ const callbackService = async (
     OAuthClientSecret = GOOGLE_OAUTH_CLIENT_SECRET;
   }
 
+  const codeVerifier = await redis.get(state);
+
+  if (!codeVerifier) throw new Error("INVALID_CODE_VERIFIER");
+
   const params = new URLSearchParams({
     code,
     client_id: OAuthClientID,
     client_secret: OAuthClientSecret,
     redirect_uri: OAuthRedirectURI,
     grant_type: "authorization_code",
+    code_verifier: codeVerifier,
   });
 
   const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
