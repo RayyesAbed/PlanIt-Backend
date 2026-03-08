@@ -10,7 +10,7 @@ const providerController = async (
   try {
     const providerType = req.params.providerType;
 
-    let OAuthLink = providerService(providerType) as string;
+    let OAuthLink = (await providerService(providerType)) as string;
 
     return res.redirect(OAuthLink);
   } catch (error) {
