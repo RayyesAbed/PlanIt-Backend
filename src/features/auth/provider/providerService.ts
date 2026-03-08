@@ -1,6 +1,7 @@
 import enProviderType from "./enProviderType";
 import loadSecrets from "../../../configs/loadSecrets";
 import * as client from "openid-client";
+import setRedisKey from "../services/common/setRedisKey";
 
 const { GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_REDIRECT_URI } = loadSecrets();
 
@@ -9,6 +10,8 @@ const providerService = async (providerType: string) => {
 
   const codeVerifier = client.randomPKCECodeVerifier();
   const codeChallenge = await client.calculatePKCECodeChallenge(codeVerifier);
+
+  await setRedisKey(state, codeVerifier, 900);
 
   if (providerType == enProviderType.GOOGLE) {
     return (
