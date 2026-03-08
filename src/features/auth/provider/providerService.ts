@@ -4,6 +4,8 @@ import loadSecrets from "../../../configs/loadSecrets";
 const { GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_REDIRECT_URI } = loadSecrets();
 
 const providerService = (providerType: string) => {
+  const state = crypto.randomUUID();
+
   if (providerType == enProviderType.GOOGLE) {
     return (
       `https://accounts.google.com/o/oauth2/v2/auth` +
