@@ -13,6 +13,7 @@ const callbackController = async (
   try {
     const providerType = req.params.providerType;
     const code = req.query.code as string;
+    const state = req.query.state as string;
 
     const deviceIPv6 = req.ip;
 
@@ -20,7 +21,7 @@ const callbackController = async (
 
     if (!code) return res.status(400).send("No code provided");
 
-    const token = await callbackService(code, providerType, deviceIPv6);
+    const token = await callbackService(code, providerType, deviceIPv6, state);
 
     return res.redirect(`${FRONTEND_URL}/callback?token=${token}`);
   } catch (error) {
