@@ -4,10 +4,14 @@ import app from "../../app";
 
 describe("POST /auth/login", () => {
   it("should log in existing users", async () => {
-    const response = await request(app).post("/auth/login").send({
+    const loginCredentials = {
       email: "fakelogin@fake.com",
       password: "test123Test456!",
-    });
+    };
+
+    const response = await request(app)
+      .post("/auth/login")
+      .send(loginCredentials);
 
     expect(response.status).toBe(200);
   });
