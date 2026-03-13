@@ -15,4 +15,17 @@ describe("POST /auth/login", () => {
 
     expect(response.status).toBe(200);
   });
+
+  it("should reject non-existing users or users with wrong password", async () => {
+    const loginCredentials = {
+      email: "fakelogin@fake.com",
+      password: "falsePassword",
+    };
+
+    const response = await request(app)
+      .post("/auth/login")
+      .send(loginCredentials);
+
+    expect(response.status).toBe(401);
+  });
 });
