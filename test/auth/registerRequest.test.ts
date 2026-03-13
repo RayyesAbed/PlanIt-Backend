@@ -4,12 +4,16 @@ import app from "../../app";
 
 describe("POST /auth/register_request", () => {
   it("should register new users", async () => {
-    const response = await request(app).post("/auth/register_request").send({
+    const registerCredentials = {
       name: "Fake",
       toBeConfirmedEmail: "fakeuser@fake.com",
       language: "en",
       password: "test123Test456!",
-    });
+    };
+
+    const response = await request(app)
+      .post("/auth/register_request")
+      .send(registerCredentials);
 
     expect(response.status).toBe(201);
   });
