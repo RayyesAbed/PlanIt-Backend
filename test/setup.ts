@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { beforeAll, afterAll } from "vitest";
 import Subscription from "../src/schemas/Subscription";
+import User from "../src/schemas/User";
 
 dotenv.config({ path: ".env.development" });
 
@@ -19,6 +20,16 @@ beforeAll(async () => {
     name: "Free",
     price: 0,
     currency: "EUR",
+  });
+
+  await User.create({
+    _id: new mongoose.Types.ObjectId(),
+    name: "Fake",
+    confirmedEmail: "fakelogin@fake.com",
+    password: "test123Test456!",
+    preferredLanguage: "en",
+    currency: "$",
+    subscription: new mongoose.Types.ObjectId(),
   });
 });
 
