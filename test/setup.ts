@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { beforeAll, afterAll } from "vitest";
 import Subscription from "../src/schemas/Subscription";
 import User from "../src/schemas/User";
+import * as argon2 from "argon2";
 
 dotenv.config({ path: ".env.development" });
 
@@ -22,11 +23,13 @@ beforeAll(async () => {
     currency: "EUR",
   });
 
+  const fakePassword = await argon2.hash("test123Test456!");
+
   await User.create({
     _id: new mongoose.Types.ObjectId(),
     name: "Fake",
     confirmedEmail: "fakelogin@fake.com",
-    password: "test123Test456!",
+    password: fakePassword,
     preferredLanguage: "en",
     currency: "$",
     subscription: new mongoose.Types.ObjectId(),
