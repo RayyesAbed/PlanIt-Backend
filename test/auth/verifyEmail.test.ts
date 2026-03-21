@@ -17,4 +17,14 @@ describe("POST /auth/verify-email", () => {
 
     expect(response.status).toBe(200);
   });
+
+  it("should throw a 401 error when verifying with an invalid JWT token", async () => {
+    const invalidToken = "invalid_token";
+
+    const response = await request(app).post(
+      `/auth/verify-email?token=${invalidToken}`,
+    );
+
+    expect(response.status).toBe(401);
+  });
 });
