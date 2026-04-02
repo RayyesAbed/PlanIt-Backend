@@ -16,8 +16,26 @@ const typeDefs = `#graphql
         subscription: Subscription
     }
 
+    type Task {
+        name: String!
+        dueDate: String
+        description: String
+        isCompleted: Boolean!
+        isDue: Boolean!
+        isReminderSet: Boolean!
+        parentStory: String # TODO: change it to match user story type
+        parentProject: String # TODO: change it to match user project type
+        repeatEveryInterval: Int
+    }
+
+    type Tasks {
+        userId: User
+        list: [Task]
+    }
+
     type Query {
         getUserData: User
+        getUserTasks: Tasks
     }
 
 `;
