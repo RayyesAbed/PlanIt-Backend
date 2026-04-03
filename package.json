@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon server.ts",
-    "dev:debug": "node --inspect -r ts-node/register index.ts",
+    "dev:debug": "node --inspect -r ts-node/register server.ts",
     "test": "vitest",
     "start": "node index.js"
   },
