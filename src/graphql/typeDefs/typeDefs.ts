@@ -17,6 +17,7 @@ const typeDefs = `#graphql
     }
 
     type Task {
+        _id: String!
         name: String!
         dueDate: String
         description: String
