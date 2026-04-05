@@ -28,14 +28,9 @@ const typeDefs = `#graphql
         repeatEveryInterval: Int
     }
 
-    type Tasks {
-        userId: User
-        list: [Task]
-    }
-
     type Query {
         getUserData: User
-        getUserTasks: Tasks
+        getUserTasks: [Task]
     }
 
 `;
