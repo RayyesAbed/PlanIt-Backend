@@ -28,9 +28,22 @@ const typeDefs = `#graphql
         repeatEveryInterval: Int
     }
 
+    input TaskInput {
+        name: String!
+        dueDate: String
+        description: String
+        isReminderSet: Boolean!
+        repeatEveryInterval: Int
+        parentProject: String # TODO: change it to match user project type
+    }
+
     type Query {
         getUserData: User
         getUserTasks: [Task]
+    }
+
+    type Mutation {
+        addTask(input: TaskInput): Task
     }
 
 `;
