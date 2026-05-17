@@ -1,4 +1,6 @@
+import { Model } from "mongoose";
 import toTaskDTO from "../../features/tasks/taskDTOMappers";
+import addItem from "../../generics/addItem";
 import Task from "../../schemas/Task";
 
 const resolvers = {
@@ -13,13 +15,9 @@ const resolvers = {
   },
   Mutation: {
     addTask: async (_: any, args: any, contextValue: any) => {
-      const userTask = await Task.findOne({ userId: contextValue.user._id });
-
       const taskDTO = toTaskDTO(args);
 
-      userTask?.list.push(taskDTO);
-
-      await userTask?.save();
+      await addItem(Task as Model<any>, contextValue, taskDTO);
 
       return args.input;
     },
