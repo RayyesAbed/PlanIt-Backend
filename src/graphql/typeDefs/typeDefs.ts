@@ -30,6 +30,7 @@ const typeDefs = `#graphql
     }
 
     input TaskInput {
+        _id: String
         name: String!
         dueDate: String
         description: String
