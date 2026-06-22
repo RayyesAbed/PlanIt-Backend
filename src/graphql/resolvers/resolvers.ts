@@ -2,6 +2,7 @@ import { Model } from "mongoose";
 import toTaskDTO from "../../features/tasks/taskDTOMappers";
 import addItem from "../../generics/addItem";
 import Task from "../../schemas/Task";
+import editItem from "../../generics/editItem";
 
 const resolvers = {
   Query: {
@@ -18,6 +19,13 @@ const resolvers = {
       const taskDTO = toTaskDTO(args);
 
       await addItem(Task as Model<any>, contextValue, taskDTO);
+
+      return args.input;
+    },
+    editTask: async (_: any, args: any, contextValue: any) => {
+      const taskDTO = toTaskDTO(args);
+
+      await editItem(Task as Model<any>, contextValue, taskDTO);
 
       return args.input;
     },
