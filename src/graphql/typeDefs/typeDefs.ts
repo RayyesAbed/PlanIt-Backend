@@ -47,6 +47,7 @@ const typeDefs = `#graphql
     type Mutation {
         addTask(input: TaskInput): Task
         editTask(input: TaskInput): Task
+        deleteTask(input: TaskInput): Task
     }
 
 `;
