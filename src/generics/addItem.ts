@@ -1,12 +1,13 @@
 import { Model } from "mongoose";
 import IDocument from "../types/IDocument";
+import { ContextValue } from "../types/graphqlTypes";
 
 const addItem = async <Type extends IDocument<Type>>(
   model: Model<Type>,
-  contextValue: any,
+  contextValue: ContextValue | null,
   itemDTO: any,
 ) => {
-  const userItem = await model.findOne({ userId: contextValue.user._id });
+  const userItem = await model.findOne({ userId: contextValue?.user._id });
 
   userItem?.list.push(itemDTO);
 
