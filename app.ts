@@ -43,7 +43,9 @@ const startApolloServer = async () => {
 
         try {
           const payload = verifyJWT(token);
-          const user = await User.findById(payload.userId);
+          const user = await User.findById(payload.userId).populate(
+            "subscription",
+          );
 
           return { user };
         } catch (error) {
