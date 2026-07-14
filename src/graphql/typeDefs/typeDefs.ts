@@ -14,6 +14,7 @@ const typeDefs = `#graphql
         preferredLanguage: String
         points: Int
         subscription: Subscription
+        picture: String
     }
 
     type Task {
