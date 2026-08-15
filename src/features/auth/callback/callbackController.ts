@@ -25,7 +25,12 @@ const callbackController = async (
 
     const token = await callbackService(code, providerType, deviceIPv6, state);
 
-    return res.redirect(`${FRONTEND_URL}/callback?token=${token}`);
+    res.cookie("login", token, {
+      httpOnly: true,
+      sameSite: "strict",
+    });
+
+    return res.redirect(`${FRONTEND_URL}/tasks`);
   } catch (error) {
     console.error("Error in OAuth provider:", error);
     return handleControllerError(error, res);
