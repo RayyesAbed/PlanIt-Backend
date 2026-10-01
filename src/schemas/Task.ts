@@ -14,6 +14,9 @@ const TaskSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
       },
+      priority: {
+        type: String,
+      },
       isDue: {
         type: Boolean,
         required: true,
