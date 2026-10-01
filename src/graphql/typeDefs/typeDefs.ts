@@ -23,6 +23,8 @@ const typeDefs = `#graphql
         dueDate: String
         description: String
         isCompleted: Boolean!
+        priority: String
+        points: Int
         isDue: Boolean!
         isReminderSet: Boolean!
         parentStory: String # TODO: change it to match user story type
