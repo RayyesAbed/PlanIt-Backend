@@ -17,6 +17,10 @@ const TaskSchema = new mongoose.Schema({
       priority: {
         type: String,
       },
+      points: {
+        type: Number,
+        enum: [10, 25, 60],
+      },
       isDue: {
         type: Boolean,
         required: true,
