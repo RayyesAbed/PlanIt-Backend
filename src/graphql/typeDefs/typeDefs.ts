@@ -26,7 +26,7 @@ const typeDefs = `#graphql
         priority: String
         points: Int
         isDue: Boolean!
-        isReminderSet: Boolean!
+        isReminderSet: Boolean
         parentStory: String # TODO: change it to match user story type
         parentProject: String # TODO: change it to match user project type
         repeatEveryInterval: Int
