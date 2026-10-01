@@ -35,7 +35,10 @@ const typeDefs = `#graphql
         name: String!
         dueDate: String
         description: String
-        isReminderSet: Boolean!
+        isCompleted: Boolean
+        isDue: Boolean
+        priority: String
+        isReminderSet: Boolean
         repeatEveryInterval: Int
         parentProject: String # TODO: change it to match user project type
     }
