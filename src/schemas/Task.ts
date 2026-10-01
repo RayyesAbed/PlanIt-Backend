@@ -27,7 +27,6 @@ const TaskSchema = new mongoose.Schema({
       },
       isReminderSet: {
         type: Boolean,
-        required: true,
       },
       parentStory: String, // TODO: change it to match user story ID
       parentProject: String, // TODO: change it to match user project ID
