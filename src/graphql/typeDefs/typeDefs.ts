@@ -40,6 +40,7 @@ const typeDefs = `#graphql
         isCompleted: Boolean
         isDue: Boolean
         priority: String
+        points: Int
         isReminderSet: Boolean
         repeatEveryInterval: Int
         parentProject: String # TODO: change it to match user project type
