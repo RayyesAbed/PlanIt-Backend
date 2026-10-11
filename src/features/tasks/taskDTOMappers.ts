@@ -9,6 +9,8 @@ const toTaskDTO = (args: any): taskDTO => {
     isCompleted: false,
     isDue: false,
     isReminderSet: args.input.isReminderSet,
+    priority: args.input.priority,
+    points: args.input.points,
     parentStory: args.input.parentStory,
     parentProject: args.input.parentProject,
     repeatEveryInterval: args.input.repeatEveryInterval,
