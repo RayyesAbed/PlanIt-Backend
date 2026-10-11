@@ -5,6 +5,7 @@ import Task from "../../schemas/Task";
 import editItem from "../../generics/editItem";
 import deleteItem from "../../generics/deleteItem";
 import { ContextValue } from "../../types/graphqlTypes";
+import handleTaskPoints from "../../features/tasks/utils/handleTaskPoints";
 
 const resolvers = {
   Query: {
@@ -24,12 +25,16 @@ const resolvers = {
     addTask: async (_: any, args: any, contextValue: ContextValue | null) => {
       const taskDTO = toTaskDTO(args);
 
+      handleTaskPoints(taskDTO);
+
       await addItem(Task as Model<any>, contextValue, taskDTO);
 
       return args.input;
     },
     editTask: async (_: any, args: any, contextValue: ContextValue | null) => {
       const taskDTO = toTaskDTO(args);
+
+      handleTaskPoints(taskDTO);
 
       await editItem(Task as Model<any>, contextValue, taskDTO);
 
