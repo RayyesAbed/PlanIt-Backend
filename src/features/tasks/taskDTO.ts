@@ -6,6 +6,8 @@ type taskDTO = {
   isCompleted: Boolean;
   isDue: Boolean;
   isReminderSet: Boolean;
+  priority: String;
+  points: Number;
   parentStory?: String;
   parentProject?: String;
   repeatEveryInterval?: Number;
