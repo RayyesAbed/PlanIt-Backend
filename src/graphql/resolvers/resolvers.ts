@@ -65,23 +65,32 @@ const resolvers = {
 
       const userId = contextValue?.user?._id;
 
+      handleTaskPoints(taskDTO);
+
+      const result = await Task.updateOne(
+        {
+          userId,
+          list: {
+            $elemMatch: {
+              _id: taskDTO._id,
+              isCompleted: false,
+            },
+          },
+        },
+        {
+          $set: {
+            "list.$.isCompleted": true,
+          },
+        },
+      );
+
+      if (result.modifiedCount === 0) return;
+
       await User.updateOne(
         { _id: userId },
         {
           $inc: {
             points: taskDTO.points,
-          },
-        },
-      );
-
-      await Task.updateOne(
-        {
-          userId: userId,
-          "list._id": taskDTO._id,
-        },
-        {
-          $set: {
-            "list.$.isCompleted": true,
           },
         },
       );
