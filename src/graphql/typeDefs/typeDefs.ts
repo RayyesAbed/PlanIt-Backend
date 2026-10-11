@@ -55,6 +55,7 @@ const typeDefs = `#graphql
         addTask(input: TaskInput): Task
         editTask(input: TaskInput): Task
         deleteTask(input: TaskInput): Task
+        completeTask(input: TaskInput): Task
     }
 
 `;
