@@ -7,6 +7,7 @@ import editItem from "../../generics/editItem";
 import deleteItem from "../../generics/deleteItem";
 import { ContextValue } from "../../types/graphqlTypes";
 import handleTaskPoints from "../../features/tasks/utils/handleTaskPoints";
+import markLateTasks from "../../features/tasks/utils/markLateTasks";
 
 const resolvers = {
   Query: {
@@ -19,6 +20,7 @@ const resolvers = {
       contextValue: ContextValue | null,
     ) => {
       const userTask = await Task.findOne({ userId: contextValue?.user._id });
+      await markLateTasks(contextValue?.user._id);
       return userTask?.list;
     },
   },
